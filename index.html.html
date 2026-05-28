@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Forex Academy | Master the Markets</title>
+    
+    <!-- STABLE TRADING FAVICON INTEGRATION -->
+    <link class="rounded" rel="icon" type="image/png" href="https://img.icons8.com/neon/96/bullish.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0f19',
+                        darkCard: '#131a2c',
+                        neonGreen: '#00e676',
+                        neonRed: '#ff3366',
+                        neonGreenGlow: 'rgba(0, 230, 118, 0.4)'
+                    },
+                    boxShadow: {
+                        'neon': '0 0 15px rgba(0, 230, 118, 0.4)',
+                        'neon-thick': '0 0 25px rgba(0, 230, 118, 0.6)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(15px) rotate(-3deg); }
+        }
+        .animate-float-1 { animation: float-slow 6s infinite ease-in-out; }
+        .animate-float-2 { animation: float-reverse 8s infinite ease-in-out; }
+
+        .chart-bg {
+            background-image: linear-gradient(rgba(0, 230, 118, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 230, 118, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-200 font-sans antialiased chart-bg relative">
+
+    <!-- NAVIGATION MENU -->
+    <nav class="sticky top-0 z-50 bg-darkBg/90 backdrop-blur-md border-b border-gray-800/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <div class="w-10 h-10 bg-neonGreen/10 border border-neonGreen rounded flex items-center justify-center text-neonGreen font-bold text-xl shadow-neon">
+                        P
+                    </div>
+                    <span class="text-xl font-extrabold tracking-wider text-white">PRIME<span class="text-neonGreen"> FOREX</span></span>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8 font-medium">
+                    <a href="#home" class="text-neonGreen transition-colors">Home</a>
+                    <a href="#analysis" class="text-gray-400 hover:text-white transition-colors">Chart Analysis</a>
+                    <a href="#courses" class="text-gray-400 hover:text-white transition-colors">Courses</a>
+                    <a href="#calculator" class="text-gray-400 hover:text-white transition-colors">Risk Calculator</a>
+                    <a href="#team" class="text-gray-400 hover:text-white transition-colors">Team</a>
+                </div>
+
+                <div class="hidden md:block">
+                    <button onclick="triggerEnrollment('')" class="px-6 py-2.5 bg-transparent border-2 border-neonGreen text-neonGreen font-semibold rounded-lg hover:bg-neonGreen hover:text-black transition-all duration-300 shadow-neon hover:shadow-neon-thick cursor-pointer">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-400 hover:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-darkCard border-b border-gray-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-neonGreen bg-gray-900">Home</a>
+            <a href="#analysis" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Chart Analysis</a>
+            <a href="#courses" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Courses</a>
+            <a href="#calculator" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Risk Calculator</a>
+            <a href="#team" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Team</a>
+            <button onclick="triggerEnrollment(''); document.getElementById('mobile-menu').classList.add('hidden');" class="w-full text-center px-3 py-2.5 rounded-md text-base font-semibold bg-neonGreen text-black shadow-neon block cursor-pointer">Enroll Now</button>
+        </div>
+    </nav>
+
+    <!-- HERO HEADER SECTION -->
+    <header id="home" class="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden px-4 py-16">
+        <div class="absolute inset-0 z-0 overflow-hidden hidden md:block pointer-events-none">
+            <div class="absolute top-[25%] left-[12%] bg-darkCard/80 backdrop-blur-sm border border-neonGreen/30 rounded-xl p-3 shadow-neon animate-float-1">
+                <div class="flex items-center gap-2 text-xs font-mono text-neonGreen">
+                    <i class="fa-solid fa-arrow-trend-up text-sm"></i>
+                    <span>BUY ORDER MATCHED</span>
+                </div>
+                <div class="text-white text-sm font-bold mt-1">+142.50 pips</div>
+            </div>
+            <div class="absolute bottom-[30%] right-[10%] bg-darkCard/80 backdrop-blur-sm border border-neonRed/30 rounded-xl p-3 shadow-md animate-float-2">
+                <div class="flex items-center gap-2 text-xs font-mono text-neonRed">
+                    <i class="fa-solid fa-arrow-trend-down text-sm"></i>
+                    <span>LIQUIDITY SWEPT</span>
+                </div>
+                <div class="text-white text-sm font-bold mt-1">OrderBlock Hit</div>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 z-0 opacity-20 pointer-events-none flex justify-between px-10">
+            <div class="w-96 h-96 bg-neonGreen rounded-full filter blur-[120px] -top-20 -left-20 absolute"></div>
+            <div class="w-96 h-96 bg-blue-600 rounded-full filter blur-[150px] bottom-10 right-10 absolute"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 bg-darkCard border border-gray-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-neonGreen uppercase mb-6 shadow-neon">
+                <span class="w-2 h-2 rounded-full bg-neonGreen animate-ping"></span> Live Market Education
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight mb-6">
+                Prime Forex Academy
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Unlock institutional-grade market knowledge. Master precision technical analysis, risk mechanics, and execution mechanics alongside professional traders.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#courses" class="w-full sm:w-auto px-8 py-4 bg-neonGreen text-black font-bold rounded-xl transition-transform transform hover:-translate-y-1 shadow-neon hover:shadow-neon-thick text-center">
+                    Explore Modules
+                </a>
+                <button onclick="triggerEnrollment('')" class="w-full sm:w-auto px-8 py-4 bg-darkCard border border-gray-700 text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors text-center cursor-pointer">
+                    Join Academy
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <hr class="border-gray-900 my-0">
+
+    <!-- CHART ANALYSIS SECTION -->
+    <section id="analysis" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Real-Time Chart Analysis</h2>
+            <p class="text-gray-400">Review our technical layouts, breakdowns, and high-probability market setups across major asset classes.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 bg-darkCard border border-gray-800 rounded-2xl p-4 flex flex-col justify-between h-[450px] relative overflow-hidden">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-3 mb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-gray-800 text-white px-3 py-1 rounded text-sm font-bold">EUR/USD</span>
+                        <span class="text-neonGreen text-sm"><i class="fa-solid fa-caret-up"></i> +0.45%</span>
+                    </div>
+                    <div class="text-gray-500 text-xs">Live Analytics Layout</div>
+                </div>
+                
+                <div class="flex-grow w-full h-full rounded-xl bg-darkBg/50 relative overflow-hidden flex items-center justify-center border border-gray-800">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1200&q=80" 
+                         alt="Forex Technical Analysis Chart" 
+                         class="w-full h-full object-cover rounded-xl opacity-90 hover:scale-[1.02] transition-transform duration-500">
+                </div>
+            </div>
+
+            <div class="space-y-6 flex flex-col justify-between">
+                <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl flex-1">
+                    <div class="flex items-center gap-3 text-neonGreen mb-3">
+                        <i class="fa-solid fa-compass text-xl"></i>
+                        <h3 class="font-bold text-lg text-white">Price Action Breakdown</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Analyzing core market structural shifts, liquidity sweeps, and order block confirmations on higher tier institutional charts.
+                    </p>
+                </div>
+
+                <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl flex-1">
+                    <div class="flex items-center gap-3 text-neonGreen mb-3">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                        <h3 class="font-bold text-lg text-white">Risk Metrics Configuration</h3>
+                    </div>
+                    <p class="text-sm text-gray-400 leading-relaxed">
+                        Every system layout demands defined entry metrics, invalidation points, and structural multi-target distributions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE FEATURES INFO -->
+    <section class="py-20 bg-darkCard/50 border-y border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-2">Expert Mentorship</h4>
+                    <p class="text-sm text-gray-400">Direct tactical insights directly from seasonal field specialists.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon"><i class="fa-solid fa-satellite-dish"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-2">Live Analysis</h4>
+                    <p class="text-sm text-gray-400">Real-time breakdown sessions across dynamic execution sessions.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon"><i class="fa-solid fa-users"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-2">Trading Community</h4>
+                    <p class="text-sm text-gray-400">Collaborative networks dedicated to growth and strict risk adherence.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon"><i class="fa-solid fa-map-signs"></i></div>
+                    <h4 class="font-bold text-white text-lg mb-2">Structured Roadmap</h4>
+                    <p class="text-sm text-gray-400">Clear step-by-step progress tracking framework modules.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACADEMY MODULES CARD CURRICULUMS -->
+    <section id="courses" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Academy Training Curriculums</h2>
+            <p class="text-gray-400">Select standard modules structured specifically around modern retail structural frameworks.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Course 1 -->
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+                <div>
+                    <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80" alt="Beginner Forex Course" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 01</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Beginner Forex Course</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Establish essential platform navigation mechanics, core syntax operations, pipeline calculations, and currency pair structural operations.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <button onclick="triggerEnrollment('Beginner Forex Course')" class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll Course</button>
+                </div>
+            </div>
+
+            <!-- Course 2 (IMAGE FIXED & FIXED WORKING LINK) -->
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+                <div>
+                    <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=600&q=80" alt="Advanced Forex Strategy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 02</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Advanced Forex Strategy</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Deep-dive architecture configurations targeting cross-session volatility models, macro-liquidity distribution cycles, and premium execution matrices.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <button onclick="triggerEnrollment('Advanced Forex Strategy')" class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll Course</button>
+                </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+                <div>
+                    <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="Price Action Mastery" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 03</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Price Action Mastery</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Clean chart analysis completely independent of lag indicators. Master market geometry configurations, order validation, and candlestick structures.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <button onclick="triggerEnrollment('Price Action Mastery')" class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll Course</button>
+                </div>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+                <div>
+                    <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Risk Management" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 04</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Risk Management</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Protect investment capital pools completely via calculated exposure scales, Kelly sizing models, drawdown mitigation rules, and strict parameters.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <button onclick="triggerEnrollment('Risk Management')" class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll Course</button>
+                </div>
+            </div>
+
+            <!-- Course 5 -->
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+                <div>
+                    <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Live Trading Sessions" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Live Access</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Live Trading Sessions</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Observe live screens across active setups, London / New York cross operations, strategy executions, and structural entries.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <button onclick="triggerEnrollment('Live Trading Sessions')" class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll Course</button>
+                </div>
+            </div>
+
+            <!-- Course 6 -->
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+                <div>
+                    <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80" alt="VIP Signals" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">VIP Tier</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">VIP Signals</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Direct entry push logs targeting institutional systems configurations instantly synchronized with custom calculated execution parameters.</p>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <button onclick="triggerEnrollment('VIP Signals')" class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll Course</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHIFTED HERE: INTERACTIVE ENROLLMENT FORM SECTION (NOW DIRECTLY UNDER COURSES) -->
+    <section id="enroll-section" class="py-12 max-w-4xl mx-auto px-4 scroll-mt-24 hidden transition-all duration-500">
+        <div class="bg-gradient-to-br from-darkCard to-[#0d1525] border-2 border-gray-800 rounded-3xl p-8 md:p-10 shadow-2xl relative">
+            
+            <!-- Close Button to Hide Form Again -->
+            <button onclick="hideEnrollmentForm()" class="absolute top-4 right-4 text-gray-500 hover:text-neonRed transition-colors cursor-pointer text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="absolute -top-3 left-10 bg-neonGreen text-black font-mono font-bold text-xs px-4 py-1 rounded-full uppercase tracking-wider shadow-neon">
+                Secure Admission Portal
+            </div>
+            
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-white">Join Prime Forex Academy</h2>
+                <p class="text-gray-400 text-sm mt-1">Submit your verification details below. Our desk terminal will contact you immediately via email.</p>
+            </div>
+
+            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST" class="space-y-6">
+                <input type="hidden" name="_replyto" value="primeforexacademyofficial@gmail.com">
+                <input type="hidden" name="_subject" value="New Prime Forex Academy Enrollment Application!">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Full Legal Name</label>
+                        <input type="text" name="name" required placeholder="e.g. John Doe" class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-neonGreen font-sans">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Active Email Address</label>
+                        <input type="email" name="email" required placeholder="name@domain.com" class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-neonGreen font-mono">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">WhatsApp / Telegram Contact</label>
+                        <input type="text" name="phone" required placeholder="+92 300 1234567" class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-neonGreen font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Selected Academy Curriculum</label>
+                        <select id="enroll-course-select" name="selected_course" required class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-gray-300 focus:outline-none focus:border-neonGreen font-sans appearance-none cursor-pointer">
+                            <option value="" disabled selected>-- Choose Curriculum Module --</option>
+                            <option value="Beginner Forex Course">Beginner Forex Course (Module 01)</option>
+                            <option value="Advanced Forex Strategy">Advanced Forex Strategy (Module 02)</option>
+                            <option value="Price Action Mastery">Price Action Mastery (Module 03)</option>
+                            <option value="Risk Management">Risk Management (Module 04)</option>
+                            <option value="Live Trading Sessions">Live Trading Sessions (Live Access)</option>
+                            <option value="VIP Signals">VIP Signals (VIP Tier)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Prior Trading Experience / Core Objectives (Optional)</label>
+                    <textarea name="message" rows="3" placeholder="Tell us about your trading journey or goals..." class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonGreen text-sm"></textarea>
+                </div>
+
+                <div class="flex items-center justify-between pt-2 flex-col sm:flex-row gap-4">
+                    <div class="text-xs text-gray-500 max-w-md">
+                        By submitting this terminal dashboard ledger, you consent to secure data logging processed directly to <span class="text-neonGreen font-mono">primeforexacademyofficial@gmail.com</span>
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto px-8 py-4 bg-neonGreen text-black font-bold rounded-xl transition-transform transform hover:-translate-y-1 shadow-neon hover:shadow-neon-thick cursor-pointer text-center whitespace-nowrap">
+                        Submit Application <i class="fa-solid fa-paper-plane ml-2"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- POSITION CALCULATOR -->
+    <section id="calculator" class="py-20 bg-darkCard/30 border-t border-gray-900/60">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-darkCard border border-gray-800 rounded-3xl p-8 shadow-xl">
+                <div class="text-center mb-8">
+                    <span class="text-neonGreen text-xs tracking-widest font-mono uppercase font-bold block mb-2">Risk Architecture</span>
+                    <h2 class="text-3xl font-black text-white">Position Size Calculator</h2>
+                    <p class="text-gray-400 text-sm mt-1">Calculate your absolute lot sizes instantly using institutional risk metrics parameters.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Account Balance ($)</label>
+                        <input id="calc-balance" type="number" value="10000" class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonGreen font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Risk Percentage (%)</label>
+                        <input id="calc-risk" type="number" value="1" step="0.1" class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonGreen font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Stop Loss (Pips)</label>
+                        <input id="calc-stop" type="number" value="15" class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonGreen font-mono">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-darkBg/80 border border-gray-800/80 p-5 rounded-2xl text-center">
+                    <div>
+                        <span class="block text-xs text-gray-500 uppercase tracking-wider font-mono">Amount At Risk</span>
+                        <span id="res-risk-amount" class="text-2xl font-black text-neonRed font-mono">$100.00</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-gray-500 uppercase tracking-wider font-mono">Recommended Lot Size</span>
+                        <span id="res-lots" class="text-2xl font-black text-neonGreen font-mono">0.66 Lots</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXECUTIVE LEADERSHIP (CEO PORTRAIT) -->
+    <section class="py-20 bg-darkBg relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-gradient-to-br from-darkCard to-gray-900 border-2 border-gray-800/80 p-8 md:p-12 rounded-3xl relative overflow-hidden shadow-2xl group hover:border-neonGreen/40 transition-colors duration-500">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-neonGreen/5 rounded-bl-full border-b border-l border-gray-800"></div>
+                
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
+                    <div class="w-40 h-40 md:w-48 md:h-48 rounded-2xl bg-darkBg border border-gray-800/80 flex items-center justify-center flex-shrink-0 text-center relative overflow-hidden shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=500&q=80" 
+                             alt="CEO Arslan Portrait" 
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="text-center md:text-left flex-grow">
+                        <span class="text-neonGreen text-xs tracking-widest font-mono uppercase font-bold block mb-2">Executive Leadership</span>
+                        <h3 class="text-3xl font-black text-white tracking-wide mb-1">CEO — Arslan</h3>
+                        <p class="text-gray-400 font-medium text-sm mb-4 border-b border-gray-800/80 pb-3">Founder, Prime Forex Academy</p>
+                        
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Professional portfolio asset allocator specializing in systematic algorithmic structure layouts, liquidity validation models, and capital portfolio risk mitigation across advanced FX trading pairs.
+                        </p>
+
+                        <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto md:mx-0">
+                            <div class="bg-darkBg/60 border border-gray-800 p-3 rounded-xl text-center">
+                                <span class="block text-neonGreen text-lg font-bold">7+ Years</span>
+                                <span class="text-[11px] text-gray-500 uppercase tracking-wider">Market Experience</span>
+                            </div>
+                            <div class="bg-darkBg/60 border border-gray-800 p-3 rounded-xl text-center">
+                                <span class="block text-neonGreen text-lg font-bold">100%</span>
+                                <span class="text-[11px] text-gray-500 uppercase tracking-wider">Risk Adherence</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEET OUR ANALYSTS TEAM -->
+    <section id="team" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Meet Our Analysts</h2>
+            <p class="text-gray-400">Our market instructors combine theoretical system frameworks with active execution models daily.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                <div class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl"><i class="fa-solid fa-user-ninja"></i></div>
+                <h4 class="font-bold text-white text-lg">Oliver</h4>
+                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Senior Tech Analyst</p>
+                <p class="text-sm text-gray-400">Oliver — Expert in market trends and forex technical analysis layouts.</p>
+            </div>
+
+            <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                <div class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl"><i class="fa-solid fa-user-astronaut"></i></div>
+                <h4 class="font-bold text-white text-lg">Ethan</h4>
+                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Macro Specialist</p>
+                <p class="text-sm text-gray-400">Ethan — Specialized in systemic fundamental data execution maps tracking.</p>
+            </div>
+
+            <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                <div class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl"><i class="fa-solid fa-user-secret"></i></div>
+                <h4 class="font-bold text-white text-lg">Liam</h4>
+                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Order Flow Analyst</p>
+                <p class="text-sm text-gray-400">Liam — Tracking deep institutional volume clusters and execution patterns.</p>
+            </div>
+
+            <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                <div class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl"><i class="fa-solid fa-user-doctor"></i></div>
+                <h4 class="font-bold text-white text-lg">Koji</h4>
+                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Psychology Coach</p>
+                <p class="text-sm text-gray-400">Koji — Skilled in risk mitigation management and trade psychology guidance.</p>
+            </div>
+
+            <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                <div class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl"><i class="fa-solid fa-user-graduate"></i></div>
+                <h4 class="font-bold text-white text-lg">Sophia</h4>
+                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Risk Architect</p>
+                <p class="text-sm text-gray-400">Sophia — Analyst specialized in asset security metrics configurations.</p>
+            </div>
+
+            <div class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                <div class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl"><i class="fa-solid fa-user"></i></div>
+                <h4 class="font-bold text-white text-lg">Emily</h4>
+                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Execution Strategist</p>
+                <p class="text-sm text-gray-400">Emily — Specializing in high-probability liquidity distribution strategies.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM HIGH-END FOOTER SECTION -->
+    <footer id="footer-contact" class="bg-[#080c14] border-t border-gray-900 pt-20 pb-10 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 bg-neonGreen/10 border border-neonGreen rounded flex items-center justify-center text-neonGreen font-bold text-xl shadow-neon">
+                            P
+                        </div>
+                        <span class="text-xl font-extrabold tracking-wider text-white">PRIME<span class="text-neonGreen"> FOREX</span></span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed">
+                        Institutional-grade asset strategies, multi-tier risk frameworks, and high-probability algorithmic trade execution modules.
+                    </p>
+                    
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="https://youtube.com/@YOUR_CHANNEL" target="_blank" class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#ff0000] hover:border-[#ff0000]/40 hover:shadow-[0_0_10px_rgba(255,0,0,0.2)] transition-all duration-300">
+                            <i class="fa-brands fa-youtube text-sm"></i>
+                        </a>
+                        <a href="https://facebook.com/YOUR_PAGE" target="_blank" class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-[#1877f2]/40 hover:shadow-[0_0_10px_rgba(24,119,242,0.2)] transition-all duration-300">
+                            <i class="fa-brands fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="https://t.me/YOUR_TELEGRAM_GROUP" target="_blank" class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#24A1DE] hover:border-[#24A1DE]/40 hover:shadow-[0_0_10px_rgba(36,161,222,0.2)] transition-all duration-300">
+                            <i class="fa-brands fa-telegram text-sm"></i>
+                        </a>
+                        <a href="https://tiktok.com/@YOUR_USERNAME" target="_blank" class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-all duration-300">
+                            <i class="fa-brands fa-tiktok text-sm"></i>
+                        </a>
+                        <a href="https://instagram.com/YOUR_ACCOUNT" target="_blank" class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#e1306c] hover:border-[#e1306c]/40 hover:shadow-[0_0_10px_rgba(225,48,108,0.2)] transition-all duration-300">
+                            <i class="fa-brands fa-instagram text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-bold text-sm tracking-wider uppercase mb-6 border-l-2 border-neonGreen pl-3">Navigation</h5>
+                    <ul class="space-y-3 text-sm font-medium">
+                        <li><a href="#home" class="text-gray-400 hover:text-neonGreen transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] opacity-50"></i> Home</a></li>
+                        <li><a href="#analysis" class="text-gray-400 hover:text-neonGreen transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] opacity-50"></i> Chart Analysis</a></li>
+                        <li><a href="#courses" class="text-gray-400 hover:text-neonGreen transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] opacity-50"></i> Courses</a></li>
+                        <li><a href="#calculator" class="text-gray-400 hover:text-neonGreen transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] opacity-50"></i> Risk Calculator</a></li>
+                        <li><a href="#team" class="text-gray-400 hover:text-neonGreen transition-colors duration-200 flex items-center gap-2"><i class="fa-solid fa-angle-right text-[10px] opacity-50"></i> Team Members</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-bold text-sm tracking-wider uppercase mb-6 border-l-2 border-neonGreen pl-3">Top Programs</h5>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span> Beginner Foundation</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span> Advanced Volatility Master</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span> Price Action Structural Module</li>
+                        <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-gray-700"></span> Capital Protection Matrix</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="text-white font-bold text-sm tracking-wider uppercase mb-6 border-l-2 border-neonGreen pl-3">Direct Connect</h5>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3 text-gray-400">
+                            <i class="fa-solid fa-phone text-neonGreen mt-1 text-xs"></i>
+                            <div>
+                                <span class="block text-xs font-mono text-gray-600 uppercase">Support Helplines</span>
+                                <a href="tel:+923001234567" class="text-gray-300 hover:text-neonGreen font-mono">+92 329 3279907</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-400">
+                            <i class="fa-solid fa-envelope text-neonGreen mt-1 text-xs"></i>
+                            <div>
+                                <span class="block text-xs font-mono text-gray-600 uppercase">Corporate Mail</span>
+                                <a href="mailto:primeforexacademyofficial@gmail.com" class="text-gray-300 hover:text-neonGreen font-mono">primeforexacademyofficial@gmail.com</a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-400">
+                            <i class="fa-solid fa-location-dot text-neonGreen mt-1 text-xs"></i>
+                            <div>
+                                <span class="block text-xs font-mono text-gray-600 uppercase">Location</span>
+                                <span class="text-gray-300 leading-relaxed font-sans">Prime Forex Academy, Sector 2, Ahsanabad (Scheme 33), Karachi, Sindh, Pakistan.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-gray-900/60 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-gray-600 font-mono">
+                    &copy; 2026 Prime Forex Academy. All rights reserved structural protocols.
+                </p>
+                <p class="text-[11px] text-gray-600 max-w-md text-center sm:text-right leading-relaxed">
+                    Risk Warning: Trading spot forex derivatives carries substantial capital exposure risk. Past structural setups do not guarantee future distribution layout models.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE SMOOTH BACK TO TOP BUTTON -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-darkCard border border-neonGreen/40 text-neonGreen rounded-xl flex items-center justify-center opacity-0 invisible translate-y-4 hover:bg-neonGreen hover:text-black hover:border-neonGreen transition-all duration-500 shadow-neon hover:shadow-neon-thick cursor-pointer">
+        <i class="fa-solid fa-arrow-up text-lg"></i>
+    </button>
+
+    <!-- INTERACTIVE SCRIPTS CODE ENGINE -->
+    <script>
+        // Mobile Toggle Framework
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+        // Sizing Position Calculator
+        const balanceInput = document.getElementById('calc-balance');
+        const riskInput = document.getElementById('calc-risk');
+        const stopInput = document.getElementById('calc-stop');
+        const resRiskAmount = document.getElementById('res-risk-amount');
+        const resLots = document.getElementById('res-lots');
+
+        function processRiskMetrics() {
+            const balance = parseFloat(balanceInput.value) || 0;
+            const riskPercent = parseFloat(riskInput.value) || 0;
+            const stopLossPips = parseFloat(stopInput.value) || 0;
+            const totalRiskValue = balance * (riskPercent / 100);
+            resRiskAmount.innerText = `$${totalRiskValue.toFixed(2)}`;
+
+            if (stopLossPips > 0) {
+                const derivedLotSizingValue = totalRiskValue / (stopLossPips * 10);
+                resLots.innerText = `${derivedLotSizingValue.toFixed(2)} Lots`;
+            } else {
+                resLots.innerText = `0.00 Lots`;
+            }
+        }
+        [balanceInput, riskInput, stopInput].forEach(element => { element.addEventListener('input', processRiskMetrics); });
+        processRiskMetrics();
+
+        // Smooth Back-To-Top Trigger Controller
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+                backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
+            } else {
+                backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-4');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // DYNAMIC ENROLLMENT LINK TRIGGER (SHOW & SCROLL)
+        function triggerEnrollment(courseName) {
+            const enrollSection = document.getElementById('enroll-section');
+            const courseSelect = document.getElementById('enroll-course-select');
+            
+            if (enrollSection) {
+                // Form ko show karne ke liye 'hidden' class remove ki
+                enrollSection.classList.remove('hidden');
+                
+                // Agar button se koi course name aaya hai to select karein, warna dropdown default rahega
+                if (courseSelect && courseName !== '') {
+                    courseSelect.value = courseName;
+                }
+                
+                // Smooth scroll to form
+                setTimeout(() => {
+                    enrollSection.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
+        // FUNCTION TO HIDE FORM AGAIN (OPTIONAL CLOSE BUTTON)
+        function hideEnrollmentForm() {
+            const enrollSection = document.getElementById('enroll-section');
+            if (enrollSection) {
+                enrollSection.classList.add('hidden');
+            }
+        }
+    </script>
+
+</body>
+</html>
