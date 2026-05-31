@@ -236,39 +236,52 @@
         </div>
     </section>
 
-    <div id="enroll-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
-        <div class="bg-darkCard border border-gray-800 rounded-2xl max-w-md w-full p-6 shadow-neon relative">
-            <button onclick="closeFormModal()" class="absolute top-4 right-4 text-gray-400 hover:text-neonRed transition-colors cursor-pointer">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <div class="mb-4">
-                <h3 class="text-2xl font-bold text-white">Academy <span class="text-neonGreen">Enrollment</span></h3>
-                <p class="text-xs text-gray-400 mt-1">Submit your details to directly contact Prime Forex Academy.</p>
-            </div>
-
-            <form id="academy-contact-form" class="space-y-4">
-                <input type="hidden" name="access_key" value="67e0b53d-df7e-490f-bdc8-bb6b07c65b93">
-                <input type="hidden" name="subject" value="New Student Enrollment Application">
-
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Full Name</label>
-                    <input type="text" name="name" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Your Name">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Email Address</label>
-                    <input type="email" name="email" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="name@example.com">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Message / Queries</label>
-                    <textarea name="message" required rows="4" class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Describe your trading experience or questions..."></textarea>
-                </div>
-                <button type="submit" id="submit-btn" class="w-full py-3 bg-neonGreen text-black font-bold rounded-xl shadow-neon text-sm hover:shadow-neon-thick transition-all cursor-pointer">
-                    Submit Application
-                </button>
-            </form>
+   <div id="enroll-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+    <div class="bg-darkCard border border-gray-800 rounded-2xl max-w-md w-full p-6 shadow-neon relative">
+        <!-- Close Button -->
+        <button onclick="closeFormModal()" class="absolute top-4 right-4 text-gray-400 hover:text-neonRed transition-colors cursor-pointer">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+        
+        <div class="mb-4">
+            <h3 class="text-2xl font-bold text-white">Academy <span class="text-neonGreen">Enrollment</span></h3>
+            <p class="text-xs text-gray-400 mt-1">Submit your details to directly contact Prime Forex Academy.</p>
         </div>
-    </div>
 
+        <!-- Form Element (Web3Forms API link added) -->
+        <form id="academy-contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+            <!-- Web3Forms Hidden Inputs -->
+            <input type="hidden" name="access_key" value="67e0b53d-df7e-490f-bdc8-bb6b07c65b93">
+            <input type="hidden" name="subject" value="New Student Enrollment - Prime Forex Academy">
+            <input type="hidden" name="from_name" value="Prime Forex Website">
+            <!-- Email confirmation loop prevent karne ke liye -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+            <!-- Name Input -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Full Name</label>
+                <input type="text" name="name" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Your Name">
+            </div>
+            
+            <!-- Email Input -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Email Address</label>
+                <input type="email" name="email" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="name@example.com">
+            </div>
+            
+            <!-- Message / SMS Input -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Message / SMS</label>
+                <textarea name="message" required rows="4" class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Describe your trading experience or questions..."></textarea>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" id="submit-btn" class="w-full py-3 bg-neonGreen text-black font-bold rounded-xl shadow-neon text-sm hover:shadow-neon-thick transition-all cursor-pointer flex items-center justify-center">
+                Submit Application
+            </button>
+        </form>
+    </div>
+</div>
     <a href="https://wa.me/923293279907?text=Hi%20Prime%20Forex%20Academy,%20I%20want%20to%20learn%20forex%20trading." 
        class="whatsapp-float" 
        target="_blank" 
@@ -410,7 +423,7 @@
                 class="lg:col-span-2 bg-darkCard border border-gray-800 rounded-2xl p-4 flex flex-col justify-between h-[450px] relative overflow-hidden">
                 <div class="flex items-center justify-between border-b border-gray-800 pb-3 mb-4">
                     <div class="flex items-center gap-3">
-                        <span class="bg-gray-800 text-white px-3 py-1 rounded text-sm font-bold">EUR/USD</span>
+                        <span class="bg-gray-800 text-white px-3 py-1 rounded text-sm font-bold">XAU/USD</span>
                         <span class="text-neonGreen text-sm"><i class="fa-solid fa-caret-up"></i> +0.45%</span>
                     </div>
                     <div class="text-gray-500 text-xs">Live Analytics Layout</div>
@@ -1048,13 +1061,139 @@
     </button>
 
     <!-- INTERACTIVE SCRIPTS CODE ENGINE -->
-    <script>
-        // Mobile Toggle Framework
+   <script>
+    // =========================================================================
+    // 1. GLOBAL ENROLLMENT FORM FUNCTIONS (HTML BUTTONS KE LIYE OUTSIDE RAKHNA ZAROORI HAI)
+    // =========================================================================
+    
+    // Modal Open karne ka function (Aapke button par onclick="openFormModal()" kaam karega)
+    function openFormModal() {
+        const modal = document.getElementById('enroll-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+
+    // Modal Close karne ka function (Cross button aur background click ke liye)
+    function closeFormModal() {
+        const modal = document.getElementById('enroll-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+
+    // Purana trigger function agar kahin use ho raha ho to handle rahega
+    function triggerEnrollment(courseName) {
+        // Agar aap modal use karna chahte hain to seedha openFormModal call kar sakte hain
+        openFormModal();
+        
+        // Agar aapka pehle koi section niche scroll hota tha, to ye code uske liye hai:
+        const enrollSection = document.getElementById('enroll-section');
+        const courseSelect = document.getElementById('enroll-course-select');
+
+        if (enrollSection) {
+            enrollSection.classList.remove('hidden');
+
+            if (courseSelect && courseName !== '') {
+                courseSelect.value = courseName;
+            }
+
+            setTimeout(() => {
+                enrollSection.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+    }
+
+    function hideEnrollmentForm() {
+        closeFormModal();
+        const enrollSection = document.getElementById('enroll-section');
+        if (enrollSection) {
+            enrollSection.classList.add('hidden');
+        }
+    }
+
+    // =========================================================================
+    // 2. MAIN FRAMEWORK (DOM LOAD HOTE HI SUB ACTIVE HO JAYEGA)
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- NEW: POP-UP MODAL BACKGROUND CLICK TO CLOSE ---
+        const modalElement = document.getElementById('enroll-modal');
+        if (modalElement) {
+            modalElement.addEventListener('click', function(e) {
+                // Agar user modal ke kale background par click kare to close ho jaye
+                if (e.target === modalElement) {
+                    closeFormModal();
+                }
+            });
+        }
+
+        // --- NEW: ACADEMY CONTACT FORM SUBMISSION (WEB3FORMS BACKGROUND SUBMIT) ---
+        const contactForm = document.getElementById('academy-contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        if (contactForm && submitBtn) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Page reload hone se rokna
+                
+                // Button ko loading state me dalna
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Sending Application...";
+                submitBtn.style.opacity = "0.7";
+
+                const formData = new FormData(contactForm);
+
+                // API Request send karna
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(async (response) => {
+                    let json = await response.json();
+                    if (response.status == 200) {
+                        // Success State
+                        submitBtn.innerText = "Application Submitted! ✓";
+                        submitBtn.style.backgroundColor = "#16a34a"; // Tailwind green-600 color
+                        submitBtn.style.color = "#ffffff";
+                        
+                        // Form fields ko khali karna
+                        contactForm.reset();
+                        
+                        // 2.5 second baad modal khud hi close ho jaye aur button reset ho jaye
+                        setTimeout(() => {
+                            closeFormModal();
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = "Submit Application";
+                            submitBtn.style.backgroundColor = ""; // Original theme color restore
+                            submitBtn.style.color = "";
+                            submitBtn.style.opacity = "1";
+                        }, 2500);
+                    } else {
+                        console.log(json);
+                        submitBtn.innerText = "Something went wrong...";
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = "1";
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    submitBtn.innerText = "Connection Error";
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = "1";
+                });
+            });
+        }
+        
+        // --- MOBILE TOGGLE FRAMEWORK ---
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => { 
+                mobileMenu.classList.toggle('hidden'); 
+            });
+        }
 
-        // Sizing Position Calculator
+        // --- POSITION CALCULATOR LOGIC (DIRECT BINDING) ---
         const balanceInput = document.getElementById('calc-balance');
         const riskInput = document.getElementById('calc-risk');
         const stopInput = document.getElementById('calc-stop');
@@ -1062,12 +1201,17 @@
         const resLots = document.getElementById('res-lots');
 
         function processRiskMetrics() {
+            if (!balanceInput || !riskInput || !stopInput || !resRiskAmount || !resLots) return;
+
             const balance = parseFloat(balanceInput.value) || 0;
             const riskPercent = parseFloat(riskInput.value) || 0;
             const stopLossPips = parseFloat(stopInput.value) || 0;
+            
+            // 1. Amount At Risk ($) Calculate karna
             const totalRiskValue = balance * (riskPercent / 100);
             resRiskAmount.innerText = `$${totalRiskValue.toFixed(2)}`;
 
+            // 2. Recommended Lot Size Calculate karna (1 pip = $10)
             if (stopLossPips > 0) {
                 const derivedLotSizingValue = totalRiskValue / (stopLossPips * 10);
                 resLots.innerText = `${derivedLotSizingValue.toFixed(2)} Lots`;
@@ -1075,80 +1219,60 @@
                 resLots.innerText = `0.00 Lots`;
             }
         }
-        [balanceInput, riskInput, stopInput].forEach(element => { element.addEventListener('input', processRiskMetrics); });
-        processRiskMetrics();
 
-        // Smooth Back-To-Top Trigger Controller
+        // Har input field par foran trigger lagana bina kisi delay ke
+        if (balanceInput && riskInput && stopInput) {
+            balanceInput.addEventListener('input', processRiskMetrics);
+            riskInput.addEventListener('input', processRiskMetrics);
+            stopInput.addEventListener('input', processRiskMetrics);
+            
+            balanceInput.addEventListener('keyup', processRiskMetrics);
+            riskInput.addEventListener('keyup', processRiskMetrics);
+            stopInput.addEventListener('keyup', processRiskMetrics);
+
+            // Pehli baar website open hone par default numbers show karne ke liye
+            processRiskMetrics();
+        }
+
+        // --- BACK-TO-TOP TRIGGER ---
         const backToTopBtn = document.getElementById('back-to-top');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
-                backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
-            } else {
-                backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
-                backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-4');
-            }
-        });
-        backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-
-        // DYNAMIC ENROLLMENT LINK TRIGGER (SHOW & SCROLL)
-        function triggerEnrollment(courseName) {
-            const enrollSection = document.getElementById('enroll-section');
-            const courseSelect = document.getElementById('enroll-course-select');
-
-            if (enrollSection) {
-                // Form ko show karne ke liye 'hidden' class remove ki
-                enrollSection.classList.remove('hidden');
-
-                // Agar button se koi course name aaya hai to select karein, warna dropdown default rahega
-                if (courseSelect && courseName !== '') {
-                    courseSelect.value = courseName;
+        if (backToTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-4');
+                    backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
+                } else {
+                    backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+                    backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-4');
                 }
+            });
+            backToTopBtn.addEventListener('click', () => { 
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
+            });
+        }
 
-                // Smooth scroll to form
-                setTimeout(() => {
-                    enrollSection.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
+        // --- WEBSITE SECURITY (RIGHT-CLICK & SHORTCUTS BLOCK) ---
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        }, false);
+
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
             }
-        }
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J' || e.keyCode === 73 || e.keyCode === 67 || e.keyCode === 74)) {
+                e.preventDefault();
+                return false;
+            }
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.keyCode === 85 || e.keyCode === 83)) {
+                e.preventDefault();
+                return false;
+            }
+        }, { capture: true });
 
-        
- 
-    </script>
- 
-   <script>
-    // 1. AAPKA ENROLLMENT FORM WALA FUNCTION
-    function hideEnrollmentForm() {
-        const enrollSection = document.getElementById('enroll-section');
-        if (enrollSection) {
-            enrollSection.classList.add('hidden');
-        }
-    }
-
-    // 2. WEBSITE SECURITY (RIGHT-CLICK BLOCK)
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    }, false);
-
-    // 3. KEYBOARD SHORTCUTS BLOCK (STRICT METHOD)
-    window.addEventListener('keydown', function(e) {
-        // F12 key block karne ke liye
-        if (e.key === 'F12' || e.keyCode === 123) {
-            e.preventDefault();
-            return false;
-        }
-        // Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J (Inspect Element)
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J' || e.keyCode === 73 || e.keyCode === 67 || e.keyCode === 74)) {
-            e.preventDefault();
-            return false;
-        }
-        // Ctrl+U (View Source) aur Ctrl+S (Save Page)
-        if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.keyCode === 85 || e.keyCode === 83)) {
-            e.preventDefault();
-            return false;
-        }
-    }, { capture: true });
-</script>   
+    });
+</script>
 </body>
 
 </html>
