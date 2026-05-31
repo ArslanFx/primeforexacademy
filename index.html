@@ -2,13 +2,11 @@
 <html lang="en" class="scroll-smooth">
 
 <head>
-      <meta name="google-site-verification" content="34mFmOe_4u-nytRypZqce3tQrfkm-N_2VaCj6YWKrOs"/>
-          <!-- <meta name="google-site-verification" content="https://arslanfx.github.io/primeforexacademy/"/> -->
+    <meta name="google-site-verification" content="34mFmOe_4u-nytRypZqce3tQrfkm-N_2VaCj6YWKrOs"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prime Forex Academy | Master the Markets</title>
 
-    <!-- STABLE TRADING FAVICON INTEGRATION -->
     <link class="rounded" rel="icon" type="image/png" href="https://img.icons8.com/neon/96/bullish.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,24 +32,18 @@
     </script>
     <style>
         @keyframes float-slow {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0px) rotate(0deg);
             }
-
             50% {
                 transform: translateY(-15px) rotate(3deg);
             }
         }
 
         @keyframes float-reverse {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0px) rotate(0deg);
             }
-
             50% {
                 transform: translateY(15px) rotate(-3deg);
             }
@@ -70,23 +62,70 @@
                 linear-gradient(90deg, rgba(0, 230, 118, 0.03) 1px, transparent 1px);
             background-size: 50px 50px;
         }
+
+        /* Fixed WhatsApp Floating Style */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #fff;
+            border-radius: 50px;
+            text-align: center;
+            padding: 12px 24px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Fullscreen API Fix for Chart Container */
+        #chart-wrapper:fullscreen {
+            width: 100vw !important;
+            height: 100vh !important;
+            padding: 15px !important;
+            background-color: #0b0f19 !important;
+        }
+        #chart-wrapper:-webkit-full-screen {
+            width: 100vw !important;
+            height: 100vh !important;
+            padding: 15px !important;
+            background-color: #0b0f19 !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px;
+                border-radius: 50%;
+            }
+            .whatsapp-float span {
+                display: none;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-darkBg text-gray-200 font-sans antialiased chart-bg relative">
 
-    <!-- NAVIGATION MENU -->
-    <nav
-        class="sticky top-0 z-50 bg-darkBg/90 backdrop-blur-md border-b border-gray-800/80 transition-all duration-300">
+    <nav class="sticky top-0 z-50 bg-darkBg/90 backdrop-blur-md border-b border-gray-800/80 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex-shrink-0 flex items-center gap-2">
-                    <div
-                        class="w-10 h-10 bg-neonGreen/10 border border-neonGreen rounded flex items-center justify-center text-neonGreen font-bold text-xl shadow-neon">
+                    <div class="w-10 h-10 bg-neonGreen/10 border border-neonGreen rounded flex items-center justify-center text-neonGreen font-bold text-xl shadow-neon">
                         P
                     </div>
-                    <span class="text-xl font-extrabold tracking-wider text-white">PRIME<span class="text-neonGreen">
-                            FOREX</span></span>
+                    <span class="text-xl font-extrabold tracking-wider text-white">PRIME<span class="text-neonGreen"> FOREX</span></span>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8 font-medium">
@@ -98,8 +137,7 @@
                 </div>
 
                 <div class="hidden md:block">
-                    <button onclick="triggerEnrollment('')"
-                        class="px-6 py-2.5 bg-transparent border-2 border-neonGreen text-neonGreen font-semibold rounded-lg hover:bg-neonGreen hover:text-black transition-all duration-300 shadow-neon hover:shadow-neon-thick cursor-pointer">
+                    <button onclick="openFormModal()" class="px-6 py-2.5 bg-transparent border-2 border-neonGreen text-neonGreen font-semibold rounded-lg hover:bg-neonGreen hover:text-black transition-all duration-300 shadow-neon hover:shadow-neon-thick cursor-pointer">
                         Enroll Now
                     </button>
                 </div>
@@ -112,39 +150,26 @@
             </div>
         </div>
 
-        <!-- Mobile Dropdown Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-darkCard border-b border-gray-800 px-4 pt-2 pb-6 space-y-3">
             <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-neonGreen bg-gray-900">Home</a>
-            <a href="#analysis"
-                class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Chart
-                Analysis</a>
-            <a href="#courses"
-                class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Courses</a>
-            <a href="#calculator"
-                class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Risk
-                Calculator</a>
-            <a href="#team"
-                class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Team</a>
-            <button onclick="triggerEnrollment(''); document.getElementById('mobile-menu').classList.add('hidden');"
-                class="w-full text-center px-3 py-2.5 rounded-md text-base font-semibold bg-neonGreen text-black shadow-neon block cursor-pointer">Enroll
-                Now</button>
+            <a href="#analysis" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Chart Analysis</a>
+            <a href="#courses" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Courses</a>
+            <a href="#calculator" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Risk Calculator</a>
+            <a href="#team" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Team</a>
+            <button onclick="openFormModal(); document.getElementById('mobile-menu').classList.add('hidden');" class="w-full text-center px-3 py-2.5 rounded-md text-base font-semibold bg-neonGreen text-black shadow-neon block cursor-pointer">Enroll Now</button>
         </div>
     </nav>
 
-    <!-- HERO HEADER SECTION -->
-    <header id="home"
-        class="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden px-4 py-16">
+    <header id="home" class="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden px-4 py-16">
         <div class="absolute inset-0 z-0 overflow-hidden hidden md:block pointer-events-none">
-            <div
-                class="absolute top-[25%] left-[12%] bg-darkCard/80 backdrop-blur-sm border border-neonGreen/30 rounded-xl p-3 shadow-neon animate-float-1">
+            <div class="absolute top-[25%] left-[12%] bg-darkCard/80 backdrop-blur-sm border border-neonGreen/30 rounded-xl p-3 shadow-neon animate-float-1">
                 <div class="flex items-center gap-2 text-xs font-mono text-neonGreen">
                     <i class="fa-solid fa-arrow-trend-up text-sm"></i>
                     <span>BUY ORDER MATCHED</span>
                 </div>
                 <div class="text-white text-sm font-bold mt-1">+142.50 pips</div>
             </div>
-            <div
-                class="absolute bottom-[30%] right-[10%] bg-darkCard/80 backdrop-blur-sm border border-neonRed/30 rounded-xl p-3 shadow-md animate-float-2">
+            <div class="absolute bottom-[30%] right-[10%] bg-darkCard/80 backdrop-blur-sm border border-neonRed/30 rounded-xl p-3 shadow-md animate-float-2">
                 <div class="flex items-center gap-2 text-xs font-mono text-neonRed">
                     <i class="fa-solid fa-arrow-trend-down text-sm"></i>
                     <span>LIQUIDITY SWEPT</span>
@@ -159,8 +184,7 @@
         </div>
 
         <div class="relative z-10 max-w-4xl mx-auto text-center">
-            <div
-                class="inline-flex items-center gap-2 bg-darkCard border border-gray-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-neonGreen uppercase mb-6 shadow-neon">
+            <div class="inline-flex items-center gap-2 bg-darkCard border border-gray-800 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-neonGreen uppercase mb-6 shadow-neon">
                 <span class="w-2 h-2 rounded-full bg-neonGreen animate-ping"></span> Live Market Education
             </div>
 
@@ -174,17 +198,202 @@
             </p>
 
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#courses"
-                    class="w-full sm:w-auto px-8 py-4 bg-neonGreen text-black font-bold rounded-xl transition-transform transform hover:-translate-y-1 shadow-neon hover:shadow-neon-thick text-center">
+                <a href="#courses" class="w-full sm:w-auto px-8 py-4 bg-neonGreen text-black font-bold rounded-xl transition-transform transform hover:-translate-y-1 shadow-neon hover:shadow-neon-thick text-center">
                     Explore Modules
                 </a>
-                <button onclick="triggerEnrollment('')"
-                    class="w-full sm:w-auto px-8 py-4 bg-darkCard border border-gray-700 text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors text-center cursor-pointer">
+                <button onclick="openFormModal()" class="w-full sm:w-auto px-8 py-4 bg-darkCard border border-gray-700 text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors text-center cursor-pointer">
                     Join Academy
                 </button>
             </div>
         </div>
     </header>
+
+    <section id="analysis" class="py-12 bg-darkCard/50 border-t border-b border-gray-800/60 relative z-10 scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                        Live <span class="text-neonGreen">Market Analysis (Gold)</span>
+                    </h2>
+                    <p class="text-sm md:text-base text-gray-400 mt-2 max-w-xl">
+                        Track live XAUUSD gold movements with precision execution tools.
+                    </p>
+                </div>
+                <div>
+                    <button id="toggle-fullscreen-btn" class="flex items-center gap-2 px-5 py-2.5 bg-darkCard border border-gray-700 text-white font-medium rounded-xl hover:bg-gray-800 hover:text-neonGreen border-neonGreen/30 transition-all shadow-neon text-sm cursor-pointer">
+                        <i id="fullscreen-icon" class="fa-solid fa-expand"></i>
+                        <span id="fullscreen-text">Large Screen</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="chart-wrapper" class="w-full rounded-2xl overflow-hidden border border-gray-800 bg-darkBg shadow-neon p-2 md:p-4 flex flex-col gap-2">
+                <button id="close-fullscreen-btn" class="hidden self-end px-4 py-1.5 bg-neonRed/20 text-neonRed border border-neonRed/40 rounded-lg text-xs font-bold hover:bg-neonRed hover:text-white transition-all">
+                    <i class="fa-solid fa-compress mr-1"></i> Exit Full Screen
+                </button>
+                <div id="tradingview_chart" class="w-full h-[450px] md:h-[650px] flex-grow"></div>
+            </div>
+        </div>
+    </section>
+
+    <div id="enroll-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+        <div class="bg-darkCard border border-gray-800 rounded-2xl max-w-md w-full p-6 shadow-neon relative">
+            <button onclick="closeFormModal()" class="absolute top-4 right-4 text-gray-400 hover:text-neonRed transition-colors cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="mb-4">
+                <h3 class="text-2xl font-bold text-white">Academy <span class="text-neonGreen">Enrollment</span></h3>
+                <p class="text-xs text-gray-400 mt-1">Submit your details to directly contact Prime Forex Academy.</p>
+            </div>
+
+            <form id="academy-contact-form" class="space-y-4">
+                <input type="hidden" name="access_key" value="67e0b53d-df7e-490f-bdc8-bb6b07c65b93">
+                <input type="hidden" name="subject" value="New Student Enrollment Application">
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Full Name</label>
+                    <input type="text" name="name" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Your Name">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Email Address</label>
+                    <input type="email" name="email" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="name@example.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Message / Queries</label>
+                    <textarea name="message" required rows="4" class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Describe your trading experience or questions..."></textarea>
+                </div>
+                <button type="submit" id="submit-btn" class="w-full py-3 bg-neonGreen text-black font-bold rounded-xl shadow-neon text-sm hover:shadow-neon-thick transition-all cursor-pointer">
+                    Submit Application
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/923293279907?text=Hi%20Prime%20Forex%20Academy,%20I%20want%20to%20learn%20forex%20trading." 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <span>Chat with Us</span>
+    </a>
+
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+        new TradingView.widget({
+            "width": "100%",
+            "height": "100%",
+            "symbol": "OANDA:XAUUSD", 
+            "interval": "H4",          
+            "timezone": "Asia/Karachi",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#131a2c",
+            "enable_publishing": false,
+            "hide_side_toolbar": false, 
+            "allow_symbol_change": false, 
+            "container_id": "tradingview_chart",
+            "studies": []
+        });
+    </script>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (menuBtn) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        const fullscreenBtn = document.getElementById('toggle-fullscreen-btn');
+        const closeFullscreenBtn = document.getElementById('close-fullscreen-btn');
+        const chartWrapper = document.getElementById('chart-wrapper');
+        const fullscreenIcon = document.getElementById('fullscreen-icon');
+        const fullscreenText = document.getElementById('fullscreen-text');
+
+        function toggleNativeFullscreen() {
+            if (!document.fullscreenElement) {
+                if (chartWrapper.requestFullscreen) {
+                    chartWrapper.requestFullscreen();
+                } else if (chartWrapper.webkitRequestFullscreen) {
+                    chartWrapper.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+        }
+
+        if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleNativeFullscreen);
+        if (closeFullscreenBtn) closeFullscreenBtn.addEventListener('click', toggleNativeFullscreen);
+
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+        function handleFullscreenChange() {
+            if (document.fullscreenElement) {
+                fullscreenIcon.classList.remove('fa-expand');
+                fullscreenIcon.classList.add('fa-compress');
+                fullscreenText.innerText = "Exit Large Screen";
+                closeFullscreenBtn.classList.remove('hidden');
+            } else {
+                fullscreenIcon.classList.remove('fa-compress');
+                fullscreenIcon.classList.add('fa-expand');
+                fullscreenText.innerText = "Large Screen";
+                closeFullscreenBtn.classList.add('hidden');
+            }
+        }
+
+        // --- FORM POPUP SCRIPT ---
+        const enrollModal = document.getElementById('enroll-modal');
+        const contactForm = document.getElementById('academy-contact-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        function openFormModal() {
+            enrollModal.classList.remove('hidden');
+        }
+
+        function closeFormModal() {
+            enrollModal.classList.add('hidden');
+        }
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitBtn.innerText = "Sending Details...";
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+            const object = Object.fromEntries(formData);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(object)
+            })
+            .then(async (response) => {
+                if (response.status == 200) {
+                    alert("Thank you! Your enrollment request has been sent directly to Prime Forex Academy.");
+                    contactForm.reset();
+                    closeFormModal();
+                } else {
+                    alert("Submission failed. Please check setup or try again.");
+                }
+            })
+            .catch(() => { alert("An error occurred. Please try again."); })
+            .finally(() => { 
+                submitBtn.innerText = "Submit Application"; 
+                submitBtn.disabled = false; 
+            });
+        });
+    </script>
+</body>
+
+</html>
 
     <hr class="border-gray-900 my-0">
 
@@ -593,7 +802,7 @@
                 <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
                     <div
                         class="w-40 h-40 md:w-48 md:h-48 rounded-2xl bg-darkBg border border-gray-800/80 flex items-center justify-center flex-shrink-0 text-center relative overflow-hidden shadow-xl">
-                         <img src="./img/founderofprimeacademy.jpeg"
+                        <img src="./img/founderofprimeacademy.jpeg"
                             alt="CEO Arslan Portrait" class="w-full h-full object-cover">
                     </div>
 
@@ -611,132 +820,132 @@
                             FX trading pairs.
                         </p>
 
-                        <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto md:mx-0">
-                            <div class="bg-darkBg/60 border border-gray-800 p-3 rounded-xl text-center">
-                                <span class="block text-neonGreen text-lg font-bold">7+ Years</span>
-                                <span class="text-[11px] text-gray-500 uppercase tracking-wider">Market
-                                    Experience</span>
-                            </div>
-                            <div class="bg-darkBg/60 border border-gray-800 p-3 rounded-xl text-center">
-                                <span class="block text-neonGreen text-lg font-bold">100%</span>
-                                <span class="text-[11px] text-gray-500 uppercase tracking-wider">Risk Adherence</span>
+                            <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto md:mx-0">
+                                <div class="bg-darkBg/60 border border-gray-800 p-3 rounded-xl text-center">
+                                    <span class="block text-neonGreen text-lg font-bold">7+ Years</span>
+                                    <span class="text-[11px] text-gray-500 uppercase tracking-wider">Market
+                                        Experience</span>
+                                </div>
+                                <div class="bg-darkBg/60 border border-gray-800 p-3 rounded-xl text-center">
+                                    <span class="block text-neonGreen text-lg font-bold">100%</span>
+                                    <span class="text-[11px] text-gray-500 uppercase tracking-wider">Risk Adherence</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- MEET OUR ANALYSTS TEAM -->
-    <section id="team" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Meet Our Analysts</h2>
-            <p class="text-gray-400">Our market instructors combine theoretical system frameworks with active execution
-                models daily.</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div
-                class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
-                <div
-                    class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
-                    <i class="fa-solid fa-user-ninja"></i></div>
-                <h4 class="font-bold text-white text-lg">Oliver</h4>
-                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Senior Tech Analyst</p>
-                <p class="text-sm text-gray-400">Oliver — Expert in market trends and forex technical analysis layouts.
-                </p>
+        <!-- MEET OUR ANALYSTS TEAM -->
+        <section id="team" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Meet Our Analysts</h2>
+                <p class="text-gray-400">Our market instructors combine theoretical system frameworks with active execution
+                    models daily.</p>
             </div>
 
-            <div
-                class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div
-                    class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
-                    <i class="fa-solid fa-user-astronaut"></i></div>
-                <h4 class="font-bold text-white text-lg">Ethan</h4>
-                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Macro Specialist</p>
-                <p class="text-sm text-gray-400">Ethan — Specialized in systemic fundamental data execution maps
-                    tracking.</p>
-            </div>
-
-            <div
-                class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
-                <div
-                    class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
-                    <i class="fa-solid fa-user-secret"></i></div>
-                <h4 class="font-bold text-white text-lg">Liam</h4>
-                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Order Flow Analyst</p>
-                <p class="text-sm text-gray-400">Liam — Tracking deep institutional volume clusters and execution
-                    patterns.</p>
-            </div>
-
-            <div
-                class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
-                <div
-                    class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
-                    <i class="fa-solid fa-user-doctor"></i></div>
-                <h4 class="font-bold text-white text-lg">Koji</h4>
-                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Psychology Coach</p>
-                <p class="text-sm text-gray-400">Koji — Skilled in risk mitigation management and trade psychology
-                    guidance.</p>
-            </div>
-
-            <div
-                class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
-                <div
-                    class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
-                    <i class="fa-solid fa-user-graduate"></i></div>
-                <h4 class="font-bold text-white text-lg">Sophia</h4>
-                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Risk Architect</p>
-                <p class="text-sm text-gray-400">Sophia — Analyst specialized in asset security metrics configurations.
-                </p>
-            </div>
-
-            <div
-                class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
-                <div
-                    class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
-                    <i class="fa-solid fa-user"></i></div>
-                <h4 class="font-bold text-white text-lg">Emily</h4>
-                <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Execution Strategist</p>
-                <p class="text-sm text-gray-400">Emily — Specializing in high-probability liquidity distribution
-                    strategies.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- PREMIUM HIGH-END FOOTER SECTION -->
-    <footer id="footer-contact" class="bg-[#080c14] border-t border-gray-900 pt-20 pb-10 relative z-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-
-                <div class="space-y-4">
-                    <div class="flex items-center gap-2">
-                        <div
-                            class="w-10 h-10 bg-neonGreen/10 border border-neonGreen rounded flex items-center justify-center text-neonGreen font-bold text-xl shadow-neon">
-                            P
-                        </div>
-                        <span class="text-xl font-extrabold tracking-wider text-white">PRIME<span
-                                class="text-neonGreen"> FOREX</span></span>
-                    </div>
-                    <p class="text-sm text-gray-500 leading-relaxed">
-                        Institutional-grade asset strategies, multi-tier risk frameworks, and high-probability
-                        algorithmic trade execution modules.
+                    class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
+                        <i class="fa-solid fa-user-ninja"></i></div>
+                    <h4 class="font-bold text-white text-lg">Oliver</h4>
+                    <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Senior Tech Analyst</p>
+                    <p class="text-sm text-gray-400">Oliver — Expert in market trends and forex technical analysis layouts.
                     </p>
+                </div>
 
-                    <div class="flex items-center gap-3 pt-2">
-                        <a href="https://www.youtube.com/@arslan.fx7" target="_blank"
-                            class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#ff0000] hover:border-[#ff0000]/40 hover:shadow-[0_0_10px_rgba(255,0,0,0.2)] transition-all duration-300">
-                            <i class="fa-brands fa-youtube text-sm"></i>
-                        </a>
-                        <a href="https://www.facebook.com/share/1CweKcWg5R/" target="_blank"
-                            class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-[#1877f2]/40 hover:shadow-[0_0_10px_rgba(24,119,242,0.2)] transition-all duration-300">
-                            <i class="fa-brands fa-facebook-f text-sm"></i>
-                        </a>
-                        <a href="" target="_blank"
-                            class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#24A1DE] hover:border-[#24A1DE]/40 hover:shadow-[0_0_10px_rgba(36,161,222,0.2)] transition-all duration-300">
-                            <i class="fa-brands fa-telegram text-sm"></i>
-                        </a>
+                <div
+                    class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
+                        <i class="fa-solid fa-user-astronaut"></i></div>
+                    <h4 class="font-bold text-white text-lg">Ethan</h4>
+                    <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Macro Specialist</p>
+                    <p class="text-sm text-gray-400">Ethan — Specialized in systemic fundamental data execution maps
+                        tracking.</p>
+                </div>
+
+                <div
+                    class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
+                        <i class="fa-solid fa-user-secret"></i></div>
+                    <h4 class="font-bold text-white text-lg">Liam</h4>
+                    <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Order Flow Analyst</p>
+                    <p class="text-sm text-gray-400">Liam — Tracking deep institutional volume clusters and execution
+                        patterns.</p>
+                </div>
+
+                <div
+                    class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
+                        <i class="fa-solid fa-user-doctor"></i></div>
+                    <h4 class="font-bold text-white text-lg">Koji</h4>
+                    <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Psychology Coach</p>
+                    <p class="text-sm text-gray-400">Koji — Skilled in risk mitigation management and trade psychology
+                        guidance.</p>
+                </div>
+
+                <div
+                    class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
+                        <i class="fa-solid fa-user-graduate"></i></div>
+                    <h4 class="font-bold text-white text-lg">Sophia</h4>
+                    <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Risk Architect</p>
+                    <p class="text-sm text-gray-400">Sophia — Analyst specialized in asset security metrics configurations.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-darkCard border border-gray-800 p-6 rounded-2xl text-center hover:border-gray-700 transition-colors">
+                    <div
+                        class="w-24 h-24 rounded-full bg-gray-900 border border-gray-800 mx-auto mb-4 flex items-center justify-center text-gray-600 text-3xl">
+                        <i class="fa-solid fa-user"></i></div>
+                    <h4 class="font-bold text-white text-lg">Emily</h4>
+                    <p class="text-xs text-neonGreen font-mono uppercase tracking-wider mb-3">Execution Strategist</p>
+                    <p class="text-sm text-gray-400">Emily — Specializing in high-probability liquidity distribution
+                        strategies.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREMIUM HIGH-END FOOTER SECTION -->
+        <footer id="footer-contact" class="bg-[#080c14] border-t border-gray-900 pt-20 pb-10 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2">
+                            <div
+                                class="w-10 h-10 bg-neonGreen/10 border border-neonGreen rounded flex items-center justify-center text-neonGreen font-bold text-xl shadow-neon">
+                                P
+                            </div>
+                            <span class="text-xl font-extrabold tracking-wider text-white">PRIME<span
+                                    class="text-neonGreen"> FOREX</span></span>
+                        </div>
+                        <p class="text-sm text-gray-500 leading-relaxed">
+                            Institutional-grade asset strategies, multi-tier risk frameworks, and high-probability
+                            algorithmic trade execution modules.
+                        </p>
+
+                        <div class="flex items-center gap-3 pt-2">
+                            <a href="https://www.youtube.com/@arslan.fx7" target="_blank"
+                                class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#ff0000] hover:border-[#ff0000]/40 hover:shadow-[0_0_10px_rgba(255,0,0,0.2)] transition-all duration-300">
+                                <i class="fa-brands fa-youtube text-sm"></i>
+                            </a>
+                            <a href="https://www.facebook.com/share/1CweKcWg5R/" target="_blank"
+                                class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#1877f2] hover:border-[#1877f2]/40 hover:shadow-[0_0_10px_rgba(24,119,242,0.2)] transition-all duration-300">
+                                <i class="fa-brands fa-facebook-f text-sm"></i>
+                            </a>
+                            <a href="" target="_blank"
+                                class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-[#24A1DE] hover:border-[#24A1DE]/40 hover:shadow-[0_0_10px_rgba(36,161,222,0.2)] transition-all duration-300">
+                                <i class="fa-brands fa-telegram text-sm"></i>
+                            </a>
                         <a href="https://www.tiktok.com/@prime.forex06?_r=1&_t=ZS-96l1oibFlfJ" target="_blank"
                             class="w-9 h-9 rounded-lg bg-darkCard border border-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/20 hover:shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-all duration-300">
                             <i class="fa-brands fa-tiktok text-sm"></i>
@@ -796,8 +1005,7 @@
                             <i class="fa-solid fa-phone text-neonGreen mt-1 text-xs"></i>
                             <div>
                                 <span class="block text-xs font-mono text-gray-600 uppercase">Support Helplines</span>
-                                <a href="tel:+923001234567" class="text-gray-300 hover:text-neonGreen font-mono">+92 329
-                                    3279907</a>
+                                <a href="tel:+923001234567" class="text-gray-300 hover:text-neonGreen font-mono">+92 324 3127374</a>
                             </div>
                         </li>
                         <li class="flex items-start gap-3 text-gray-400">
