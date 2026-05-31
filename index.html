@@ -1112,35 +1112,43 @@
             }
         }
 
-        // FUNCTION TO HIDE FORM AGAIN (OPTIONAL CLOSE BUTTON)
-        function hideEnrollmentForm() {
-            const enrollSection = document.getElementById('enroll-section');
-            if (enrollSection) {
-                enrollSection.classList.add('hidden');
-            }
-        }
-         // Right-click block karne ke liye
-    document.addEventListener('contextmenu', event => event.preventDefault());
-
-    // Shortcuts (Ctrl+U, Ctrl+Shift+I, F12) block karne ke liye
-    document.onkeydown = function(e) {
-        if (e.keyCode == 123) { // F12
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Ctrl+Shift+C
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U
-            return false;
-        }
-    }
+        
  
     </script>
  
-   
+   <script>
+    // 1. AAPKA ENROLLMENT FORM WALA FUNCTION
+    function hideEnrollmentForm() {
+        const enrollSection = document.getElementById('enroll-section');
+        if (enrollSection) {
+            enrollSection.classList.add('hidden');
+        }
+    }
+
+    // 2. WEBSITE SECURITY (RIGHT-CLICK BLOCK)
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    }, false);
+
+    // 3. KEYBOARD SHORTCUTS BLOCK (STRICT METHOD)
+    window.addEventListener('keydown', function(e) {
+        // F12 key block karne ke liye
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            return false;
+        }
+        // Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J (Inspect Element)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J' || e.keyCode === 73 || e.keyCode === 67 || e.keyCode === 74)) {
+            e.preventDefault();
+            return false;
+        }
+        // Ctrl+U (View Source) aur Ctrl+S (Save Page)
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.keyCode === 85 || e.keyCode === 83)) {
+            e.preventDefault();
+            return false;
+        }
+    }, { capture: true });
+</script>   
 </body>
 
 </html>
