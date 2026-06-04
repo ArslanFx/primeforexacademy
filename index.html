@@ -143,7 +143,7 @@
                 </div>
 
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-400 hover:text-white focus:outline-none">
+                    <button onclick="const menu = document.getElementById('mobile-menu'); menu.classList.toggle('hidden'); const icon = this.querySelector('i'); if(menu.classList.contains('hidden')){ icon.className='fa-solid fa-bars text-2xl'; } else { icon.className='fa-solid fa-xmark text-2xl'; }" id="mobile-menu-btn" class="text-gray-400 hover:text-white focus:outline-none cursor-pointer">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -151,12 +151,12 @@
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden bg-darkCard border-b border-gray-800 px-4 pt-2 pb-6 space-y-3">
-            <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-neonGreen bg-gray-900">Home</a>
-            <a href="#analysis" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Chart Analysis</a>
-            <a href="#courses" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Courses</a>
-            <a href="#calculator" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Risk Calculator</a>
-            <a href="#team" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Team</a>
-            <button onclick="openFormModal(); document.getElementById('mobile-menu').classList.add('hidden');" class="w-full text-center px-3 py-2.5 rounded-md text-base font-semibold bg-neonGreen text-black shadow-neon block cursor-pointer">Enroll Now</button>
+            <a href="#home" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-neonGreen bg-gray-900">Home</a>
+            <a href="#analysis" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Chart Analysis</a>
+            <a href="#courses" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Courses</a>
+            <a href="#calculator" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Risk Calculator</a>
+            <a href="#team" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Team</a>
+            <button onclick="openFormModal(); document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="w-full text-center px-3 py-2.5 rounded-md text-base font-semibold bg-neonGreen text-black shadow-neon block cursor-pointer">Enroll Now</button>
         </div>
     </nav>
 
