@@ -138,9 +138,9 @@
                 </div>
 
                 <div class="hidden md:block">
-                    <button onclick="openFormModal()" class="px-6 py-2.5 bg-transparent border-2 border-neonGreen text-neonGreen font-semibold rounded-lg hover:bg-neonGreen hover:text-black transition-all duration-300 shadow-neon hover:shadow-neon-thick cursor-pointer">
+                    <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20enroll%20in%20Prime%20Forex%20Academy." target="_blank" class="inline-block px-6 py-2.5 bg-transparent border-2 border-neonGreen text-neonGreen font-semibold rounded-lg hover:bg-neonGreen hover:text-black transition-all duration-300 shadow-neon hover:shadow-neon-thick cursor-pointer">
                         Enroll Now
-                    </button>
+                    </a>
                 </div>
 
                 <div class="md:hidden">
@@ -157,7 +157,10 @@
             <a href="#courses" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Courses</a>
             <a href="#calculator" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Risk Calculator</a>
             <a href="#team" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800">Team</a>
-            <button onclick="openFormModal(); document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="w-full text-center px-3 py-2.5 rounded-md text-base font-semibold bg-neonGreen text-black shadow-neon block cursor-pointer">Enroll Now</button>
+            
+            <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20enroll%20in%20Prime%20Forex%20Academy." target="_blank" onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';" class="w-full text-center px-3 py-2.5 rounded-md text-base font-semibold bg-neonGreen text-black shadow-neon block cursor-pointer">
+                Enroll Now
+            </a>
         </div>
     </nav>
 
@@ -202,166 +205,121 @@
                 <a href="#courses" class="w-full sm:w-auto px-8 py-4 bg-neonGreen text-black font-bold rounded-xl transition-transform transform hover:-translate-y-1 shadow-neon hover:shadow-neon-thick text-center">
                     Explore Modules
                 </a>
-                <button onclick="openFormModal()" class="w-full sm:w-auto px-8 py-4 bg-darkCard border border-gray-700 text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors text-center cursor-pointer">
+                
+                <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20Join%20the%20Prime%20Forex%20Academy." target="_blank" class="w-full sm:w-auto px-8 py-4 bg-darkCard border border-gray-700 text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors text-center cursor-pointer">
                     Join Academy
-                </button>
+                </a>
             </div>
         </div>
     </header>
+ 
 
-    <section id="analysis" class="py-12 bg-darkCard/50 border-t border-b border-gray-800/60 relative z-10 scroll-mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
-                <div class="text-center md:text-left">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
-                        Live <span class="text-neonGreen">Market Analysis (Gold)</span>
-                    </h2>
-                    <p class="text-sm md:text-base text-gray-400 mt-2 max-w-xl">
-                        Track live XAUUSD gold movements with precision execution tools.
-                    </p>
+        <section id="analysis" class="py-12 bg-darkCard/50 border-t border-b border-gray-800/60 relative z-10 scroll-mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+                            Live <span class="text-neonGreen">Market Analysis (Gold)</span>
+                        </h2>
+                        <p class="text-sm md:text-base text-gray-400 mt-2 max-w-xl">
+                            Track live XAUUSD gold movements with precision execution tools.
+                        </p>
+                    </div>
+                    <div>
+                        <button id="toggle-fullscreen-btn" class="flex items-center gap-2 px-5 py-2.5 bg-darkCard border border-gray-700 text-white font-medium rounded-xl hover:bg-gray-800 hover:text-neonGreen border-neonGreen/30 transition-all shadow-neon text-sm cursor-pointer">
+                            <i id="fullscreen-icon" class="fa-solid fa-expand"></i>
+                            <span id="fullscreen-text">Large Screen</span>
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <button id="toggle-fullscreen-btn" class="flex items-center gap-2 px-5 py-2.5 bg-darkCard border border-gray-700 text-white font-medium rounded-xl hover:bg-gray-800 hover:text-neonGreen border-neonGreen/30 transition-all shadow-neon text-sm cursor-pointer">
-                        <i id="fullscreen-icon" class="fa-solid fa-expand"></i>
-                        <span id="fullscreen-text">Large Screen</span>
+                
+                <div id="chart-wrapper" class="w-full rounded-2xl overflow-hidden border border-gray-800 bg-darkBg shadow-neon p-2 md:p-4 flex flex-col gap-2">
+                    <button id="close-fullscreen-btn" class="hidden self-end px-4 py-1.5 bg-neonRed/20 text-neonRed border border-neonRed/40 rounded-lg text-xs font-bold hover:bg-neonRed hover:text-white transition-all">
+                        <i class="fa-solid fa-compress mr-1"></i> Exit Full Screen
                     </button>
+                    <div id="tradingview_chart" class="w-full h-[450px] md:h-[650px] flex-grow"></div>
                 </div>
             </div>
-            
-            <div id="chart-wrapper" class="w-full rounded-2xl overflow-hidden border border-gray-800 bg-darkBg shadow-neon p-2 md:p-4 flex flex-col gap-2">
-                <button id="close-fullscreen-btn" class="hidden self-end px-4 py-1.5 bg-neonRed/20 text-neonRed border border-neonRed/40 rounded-lg text-xs font-bold hover:bg-neonRed hover:text-white transition-all">
-                    <i class="fa-solid fa-compress mr-1"></i> Exit Full Screen
-                </button>
-                <div id="tradingview_chart" class="w-full h-[450px] md:h-[650px] flex-grow"></div>
-            </div>
-        </div>
-    </section>
+        </section>
+        <a href="https://wa.me/923293279907?text=Hi%20Prime%20Forex%20Academy,%20I%20want%20to%20learn%20forex%20trading." 
+        class="whatsapp-float" 
+        target="_blank" 
+        rel="noopener noreferrer">
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+            <span>Chat with Us</span>
+        </a>
 
-   <div id="enroll-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
-    <div class="bg-darkCard border border-gray-800 rounded-2xl max-w-md w-full p-6 shadow-neon relative">
-        <!-- Close Button -->
-        <button onclick="closeFormModal()" class="absolute top-4 right-4 text-gray-400 hover:text-neonRed transition-colors cursor-pointer">
-            <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
-        
-        <div class="mb-4">
-            <h3 class="text-2xl font-bold text-white">Academy <span class="text-neonGreen">Enrollment</span></h3>
-            <p class="text-xs text-gray-400 mt-1">Submit your details to directly contact Prime Forex Academy.</p>
-        </div>
-
-        <!-- Form Element (Web3Forms API link added) -->
-        <form id="academy-contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
-            <!-- Web3Forms Hidden Inputs -->
-            <input type="hidden" name="access_key" value="67e0b53d-df7e-490f-bdc8-bb6b07c65b93">
-            <input type="hidden" name="subject" value="New Student Enrollment - Prime Forex Academy">
-            <input type="hidden" name="from_name" value="Prime Forex Website">
-            <!-- Email confirmation loop prevent karne ke liye -->
-            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
-            <!-- Name Input -->
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Full Name</label>
-                <input type="text" name="name" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Your Name">
-            </div>
-            
-            <!-- Email Input -->
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Email Address</label>
-                <input type="email" name="email" required class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="name@example.com">
-            </div>
-            
-            <!-- Message / SMS Input -->
-            <div>
-                <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Message / SMS</label>
-                <textarea name="message" required rows="4" class="w-full bg-darkBg border border-gray-700 rounded-xl px-4 py-2.5 text-white text-sm focus:border-neonGreen focus:outline-none" placeholder="Describe your trading experience or questions..."></textarea>
-            </div>
-            
-            <!-- Submit Button -->
-            <button type="submit" id="submit-btn" class="w-full py-3 bg-neonGreen text-black font-bold rounded-xl shadow-neon text-sm hover:shadow-neon-thick transition-all cursor-pointer flex items-center justify-center">
-                Submit Application
-            </button>
-        </form>
-    </div>
-</div>
-    <a href="https://wa.me/923293279907?text=Hi%20Prime%20Forex%20Academy,%20I%20want%20to%20learn%20forex%20trading." 
-       class="whatsapp-float" 
-       target="_blank" 
-       rel="noopener noreferrer">
-        <i class="fa-brands fa-whatsapp text-2xl"></i>
-        <span>Chat with Us</span>
-    </a>
-
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script type="text/javascript">
-        new TradingView.widget({
-            "width": "100%",
-            "height": "100%",
-            "symbol": "OANDA:XAUUSD", 
-            "interval": "H4",          
-            "timezone": "Asia/Karachi",
-            "theme": "dark",
-            "style": "1",
-            "locale": "en",
-            "toolbar_bg": "#131a2c",
-            "enable_publishing": false,
-            "hide_side_toolbar": false, 
-            "allow_symbol_change": false, 
-            "container_id": "tradingview_chart",
-            "studies": []
-        });
-    </script>
-
-    <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if (menuBtn) {
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+            new TradingView.widget({
+                "width": "100%",
+                "height": "100%",
+                "symbol": "OANDA:XAUUSD", 
+                "interval": "H4",          
+                "timezone": "Asia/Karachi",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#131a2c",
+                "enable_publishing": false,
+                "hide_side_toolbar": false, 
+                "allow_symbol_change": false, 
+                "container_id": "tradingview_chart",
+                "studies": []
             });
-        }
+        </script>
 
-        const fullscreenBtn = document.getElementById('toggle-fullscreen-btn');
-        const closeFullscreenBtn = document.getElementById('close-fullscreen-btn');
-        const chartWrapper = document.getElementById('chart-wrapper');
-        const fullscreenIcon = document.getElementById('fullscreen-icon');
-        const fullscreenText = document.getElementById('fullscreen-text');
+        <script>
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuBtn) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
 
-        function toggleNativeFullscreen() {
-            if (!document.fullscreenElement) {
-                if (chartWrapper.requestFullscreen) {
-                    chartWrapper.requestFullscreen();
-                } else if (chartWrapper.webkitRequestFullscreen) {
-                    chartWrapper.webkitRequestFullscreen();
-                }
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
+            const fullscreenBtn = document.getElementById('toggle-fullscreen-btn');
+            const closeFullscreenBtn = document.getElementById('close-fullscreen-btn');
+            const chartWrapper = document.getElementById('chart-wrapper');
+            const fullscreenIcon = document.getElementById('fullscreen-icon');
+            const fullscreenText = document.getElementById('fullscreen-text');
+
+            function toggleNativeFullscreen() {
+                if (!document.fullscreenElement) {
+                    if (chartWrapper.requestFullscreen) {
+                        chartWrapper.requestFullscreen();
+                    } else if (chartWrapper.webkitRequestFullscreen) {
+                        chartWrapper.webkitRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
                 }
             }
-        }
 
-        if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleNativeFullscreen);
-        if (closeFullscreenBtn) closeFullscreenBtn.addEventListener('click', toggleNativeFullscreen);
+            if (fullscreenBtn) fullscreenBtn.addEventListener('click', toggleNativeFullscreen);
+            if (closeFullscreenBtn) closeFullscreenBtn.addEventListener('click', toggleNativeFullscreen);
 
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 
-        function handleFullscreenChange() {
-            if (document.fullscreenElement) {
-                fullscreenIcon.classList.remove('fa-expand');
-                fullscreenIcon.classList.add('fa-compress');
-                fullscreenText.innerText = "Exit Large Screen";
-                closeFullscreenBtn.classList.remove('hidden');
-            } else {
-                fullscreenIcon.classList.remove('fa-compress');
-                fullscreenIcon.classList.add('fa-expand');
-                fullscreenText.innerText = "Large Screen";
-                closeFullscreenBtn.classList.add('hidden');
+            function handleFullscreenChange() {
+                if (document.fullscreenElement) {
+                    fullscreenIcon.classList.remove('fa-expand');
+                    fullscreenIcon.classList.add('fa-compress');
+                    fullscreenText.innerText = "Exit Large Screen";
+                    closeFullscreenBtn.classList.remove('hidden');
+                } else {
+                    fullscreenIcon.classList.remove('fa-compress');
+                    fullscreenIcon.classList.add('fa-expand');
+                    fullscreenText.innerText = "Large Screen";
+                    closeFullscreenBtn.classList.add('hidden');
+                }
             }
-        }
 
         // --- FORM POPUP SCRIPT ---
         const enrollModal = document.getElementById('enroll-modal');
@@ -405,9 +363,7 @@
             });
         });
     </script>
-</body>
-
-</html>
+ 
 
     <hr class="border-gray-900 my-0">
 
@@ -503,260 +459,148 @@
     </section>
 
     <!-- ACADEMY MODULES CARD CURRICULUMS -->
-    <section id="courses" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   <section id="courses" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Academy Training Curriculums</h2>
-            <p class="text-gray-400">Select standard modules structured specifically around modern retail structural
-                frameworks.</p>
+            <p class="text-gray-400">Select standard modules structured specifically around modern retail structural frameworks.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Course 1 -->
-            <div
-                class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
                 <div>
                     <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80"
                             alt="Beginner Forex Course"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
-                        <span
-                            class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module
-                            01</span>
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 01</span>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">
-                            Beginner Forex Course</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Establish essential platform navigation
-                            mechanics, core syntax operations, pipeline calculations, and currency pair structural
-                            operations.</p>
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Beginner Forex Course</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Establish essential platform navigation mechanics, core syntax operations, pipeline calculations, and currency pair structural operations.</p>
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="triggerEnrollment('Beginner Forex Course')"
-                        class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll
-                        Course</button>
+                    <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Beginner%20Forex%20Course." target="_blank"
+                        class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">
+                        Enroll Course
+                    </a>
                 </div>
             </div>
 
-            <!-- Course 2 (IMAGE FIXED & FIXED WORKING LINK) -->
-            <div
-                class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+            <!-- Course 2 -->
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
                 <div>
                     <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=600&q=80"
                             alt="Advanced Forex Strategy"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
-                        <span
-                            class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module
-                            02</span>
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 02</span>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">
-                            Advanced Forex Strategy</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Deep-dive architecture configurations targeting
-                            cross-session volatility models, macro-liquidity distribution cycles, and premium execution
-                            matrices.</p>
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Advanced Forex Strategy</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Deep-dive architecture configurations targeting cross-session volatility models, macro-liquidity distribution cycles, and premium execution matrices.</p>
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="triggerEnrollment('Advanced Forex Strategy')"
-                        class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll
-                        Course</button>
+                    <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Advanced%20Forex%20Strategy%20Course." target="_blank"
+                        class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">
+                        Enroll Course
+                    </a>
                 </div>
             </div>
 
             <!-- Course 3 -->
-            <div
-                class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
                 <div>
                     <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80"
                             alt="Price Action Mastery"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
-                        <span
-                            class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module
-                            03</span>
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 03</span>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Price
-                            Action Mastery</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Clean chart analysis completely independent of
-                            lag indicators. Master market geometry configurations, order validation, and candlestick
-                            structures.</p>
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Price Action Mastery</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Clean chart analysis completely independent of lag indicators. Master market geometry configurations, order validation, and candlestick structures.</p>
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="triggerEnrollment('Price Action Mastery')"
-                        class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll
-                        Course</button>
+                    <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Price%20Action%20Mastery%20Course." target="_blank"
+                        class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">
+                        Enroll Course
+                    </a>
                 </div>
             </div>
 
             <!-- Course 4 -->
-            <div
-                class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
                 <div>
                     <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80"
                             alt="Risk Management"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
-                        <span
-                            class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module
-                            04</span>
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Module 04</span>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Risk
-                            Management</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Protect investment capital pools completely via
-                            calculated exposure scales, Kelly sizing models, drawdown mitigation rules, and strict
-                            parameters.</p>
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Risk Management</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Protect investment capital pools completely via calculated exposure scales, Kelly sizing models, drawdown mitigation rules, and strict parameters.</p>
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="triggerEnrollment('Risk Management')"
-                        class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll
-                        Course</button>
+                    <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Risk%20Management%20Course." target="_blank"
+                        class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">
+                        Enroll Course
+                    </a>
                 </div>
             </div>
 
             <!-- Course 5 -->
-            <div
-                class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
                 <div>
                     <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
                             alt="Live Trading Sessions"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
-                        <span
-                            class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Live
-                            Access</span>
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">Live Access</span>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Live
-                            Trading Sessions</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Observe live screens across active setups,
-                            London / New York cross operations, strategy executions, and structural entries.</p>
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">Live Trading Sessions</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Observe live screens across active setups, London / New York cross operations, strategy executions, and structural entries.</p>
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="triggerEnrollment('Live Trading Sessions')"
-                        class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll
-                        Course</button>
+                    <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20get%20access%20to%20Live%20Trading%20Sessions." target="_blank"
+                        class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">
+                        Enroll Course
+                    </a>
                 </div>
             </div>
 
             <!-- Course 6 -->
-            <div
-                class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
+            <div class="bg-darkCard border border-gray-800 rounded-2xl overflow-hidden flex flex-col justify-between group hover:border-gray-700 transition-colors">
                 <div>
                     <div class="h-48 bg-gray-900 border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80"
                             alt="VIP Signals"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
-                        <span
-                            class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">VIP
-                            Tier</span>
+                        <span class="absolute text-xs bottom-3 right-4 tracking-wider text-neonGreen font-mono uppercase bg-darkBg border border-gray-800 px-2 py-0.5 rounded">VIP Tier</span>
                     </div>
                     <div class="p-6">
-                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">VIP
-                            Signals</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Direct entry push logs targeting institutional
-                            systems configurations instantly synchronized with custom calculated execution parameters.
-                        </p>
+                        <h3 class="font-bold text-xl text-white mb-2 group-hover:text-neonGreen transition-colors">VIP Signals</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Direct entry push logs targeting institutional systems configurations instantly synchronized with custom calculated execution parameters.</p>
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <button onclick="triggerEnrollment('VIP Signals')"
-                        class="w-full py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">Enroll
-                        Course</button>
+                    <a href="https://wa.me/923001234567?text=Hi!%20I%20want%20to%20join%20the%20VIP%20Signals%20Tier." target="_blank"
+                        class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-semibold rounded-xl transition-all duration-300 cursor-pointer">
+                        Enroll Course
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SHIFTED HERE: INTERACTIVE ENROLLMENT FORM SECTION (NOW DIRECTLY UNDER COURSES) -->
-    <section id="enroll-section" class="py-12 max-w-4xl mx-auto px-4 scroll-mt-24 hidden transition-all duration-500">
-        <div
-            class="bg-gradient-to-br from-darkCard to-[#0d1525] border-2 border-gray-800 rounded-3xl p-8 md:p-10 shadow-2xl relative">
-
-            <!-- Close Button to Hide Form Again -->
-            <button onclick="hideEnrollmentForm()"
-                class="absolute top-4 right-4 text-gray-500 hover:text-neonRed transition-colors cursor-pointer text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div
-                class="absolute -top-3 left-10 bg-neonGreen text-black font-mono font-bold text-xs px-4 py-1 rounded-full uppercase tracking-wider shadow-neon">
-                Secure Admission Portal
-            </div>
-
-            <div class="mb-8">
-                <h2 class="text-3xl font-black text-white">Join Prime Forex Academy</h2>
-                <p class="text-gray-400 text-sm mt-1">Submit your verification details below. Our desk terminal will
-                    contact you immediately via email.</p>
-            </div>
-
-            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID_HERE" method="POST" class="space-y-6">
-                <input type="hidden" name="_replyto" value="primeforexacademyofficial@gmail.com">
-                <input type="hidden" name="_subject" value="New Prime Forex Academy Enrollment Application!">
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Full Legal Name</label>
-                        <input type="text" name="name" required placeholder="e.g. John Doe"
-                            class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-neonGreen font-sans">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Active Email Address</label>
-                        <input type="email" name="email" required placeholder="name@domain.com"
-                            class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-neonGreen font-mono">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">WhatsApp / Telegram
-                            Contact</label>
-                        <input type="text" name="phone" required placeholder="+92 300 1234567"
-                            class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-neonGreen font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Selected Academy
-                            Curriculum</label>
-                        <select id="enroll-course-select" name="selected_course" required
-                            class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3.5 text-gray-300 focus:outline-none focus:border-neonGreen font-sans appearance-none cursor-pointer">
-                            <option value="" disabled selected>-- Choose Curriculum Module --</option>
-                            <option value="Beginner Forex Course">Beginner Forex Course (Module 01)</option>
-                            <option value="Advanced Forex Strategy">Advanced Forex Strategy (Module 02)</option>
-                            <option value="Price Action Mastery">Price Action Mastery (Module 03)</option>
-                            <option value="Risk Management">Risk Management (Module 04)</option>
-                            <option value="Live Trading Sessions">Live Trading Sessions (Live Access)</option>
-                            <option value="VIP Signals">VIP Signals (VIP Tier)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-mono text-gray-400 uppercase mb-2">Prior Trading Experience / Core
-                        Objectives (Optional)</label>
-                    <textarea name="message" rows="3" placeholder="Tell us about your trading journey or goals..."
-                        class="w-full bg-darkBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonGreen text-sm"></textarea>
-                </div>
-
-                <div class="flex items-center justify-between pt-2 flex-col sm:flex-row gap-4">
-                    <div class="text-xs text-gray-500 max-w-md">
-                        By submitting this terminal dashboard ledger, you consent to secure data logging processed
-                        directly to <span class="text-neonGreen font-mono">primeforexacademyofficial@gmail.com</span>
-                    </div>
-                    <button type="submit"
-                        class="w-full sm:w-auto px-8 py-4 bg-neonGreen text-black font-bold rounded-xl transition-transform transform hover:-translate-y-1 shadow-neon hover:shadow-neon-thick cursor-pointer text-center whitespace-nowrap">
-                        Submit Application <i class="fa-solid fa-paper-plane ml-2"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
-
+  
     <!-- POSITION CALCULATOR -->
     <section id="calculator" class="py-20 bg-darkCard/30 border-t border-gray-900/60">
         <div class="max-w-4xl mx-auto px-4">
