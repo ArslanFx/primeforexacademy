@@ -457,7 +457,60 @@
             </div>
         </div>
     </section>
+<!-- ========================================== -->
+<!-- 1. COUNTERS SECTION START HERE             -->
+<!-- ========================================== -->
+<section class="py-20 bg-darkCard/50 border-y border-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            
+            <!-- Students Counter -->
+            <div class="text-center p-6">
+                <!-- Icon: User Graduate -->
+                <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <h4 class="font-bold text-neonGreen text-3xl mb-2 counter" data-target="99">0</h4>
+                <p class="font-bold text-white text-lg mb-2">Students</p>
+                <p class="text-sm text-gray-400">Active learners mastering our institutional trading strategies.</p>
+            </div>
 
+            <!-- Mentor Counter -->
+            <div class="text-center p-6">
+                <!-- Icon: Chalkboard User -->
+                <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <h4 class="font-bold text-neonGreen text-3xl mb-2 counter" data-target="10">0</h4>
+                <p class="font-bold text-white text-lg mb-2">Mentor</p>
+                <p class="text-sm text-gray-400">Professional market analysts sharing real-time execution insights.</p>
+            </div>
+
+            <!-- Modules Counter -->
+            <div class="text-center p-6">
+                <!-- Icon: Book Open Reader -->
+                <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon">
+                    <i class="fa-solid fa-book-open-reader"></i>
+                </div>
+                <h4 class="font-bold text-neonGreen text-3xl mb-2 counter" data-target="50">0</h4>
+                <p class="font-bold text-white text-lg mb-2">Modules</p>
+                <p class="text-sm text-gray-400">Comprehensive step-by-step framework from basic to advanced.</p>
+            </div>
+
+            <!-- Courses Counter -->
+            <div class="text-center p-6">
+                <!-- Icon: Layer Group -->
+                <div class="w-12 h-12 bg-neonGreen/10 border border-neonGreen text-neonGreen rounded-xl flex items-center justify-center text-xl mx-auto mb-4 shadow-neon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h4 class="font-bold text-neonGreen text-3xl mb-2 counter" data-target="10">0</h4>
+                <p class="font-bold text-white text-lg mb-2">Courses</p>
+                <p class="text-sm text-gray-400">Structured curriculum designed for consistency and risk management.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
     <!-- ACADEMY MODULES CARD CURRICULUMS -->
    <section id="courses" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-16">
@@ -1127,6 +1180,37 @@
         }, { capture: true });
 
     });
+    document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll('.counter');
+    
+    counters.forEach(counter => {
+        counter.innerText = '0';
+        
+        const updateCounter = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText.replace('+', '');
+            
+            // 8 seconds tak simulation chalane ke liye steps ko mazeed chota kiya hai
+            const increment = target / 280; 
+            
+            if(count < target) {
+                const nextCount = count + increment;
+                // Agar target bara hai toh smoothly barhe, warna exact target set ho jaye
+                if (Math.ceil(nextCount) >= target) {
+                    counter.innerText = `+${target}`;
+                } else {
+                    counter.innerText = `+${Math.ceil(nextCount)}`;
+                    // Delay ko 25ms se barha kar 30ms kar diya hai taake speed mazeed slow ho jaye
+                    setTimeout(updateCounter, 30); 
+                }
+            } else {
+                counter.innerText = `+${target}`;
+            }
+        };
+        
+        updateCounter();
+    });
+});
 </script>
 </body>
 
