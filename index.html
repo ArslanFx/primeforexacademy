@@ -325,7 +325,19 @@
 
     <header id="home"
         class="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden px-4 py-16">
-        
+       <!-- STICKY SCROLL TO TOP ARROW -->
+<button id="scrollTopBtn" class="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-2 group opacity-0 translate-y-5 pointer-events-none transition-all duration-500">
+    <!-- Text Label -->
+    <span class="text-[#00f3ff] text-[10px] font-mono tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        TOP
+    </span>
+    
+    <!-- Arrow Circle with Cyberpunk Glow & Hover Up Animation -->
+    <div class="relative flex justify-center items-center w-11 h-11 border-2 rounded-full bg-black/90 backdrop-blur-md group-hover:-translate-y-2 transition-all duration-300" style="border-color: #00f3ff; box-shadow: 0 0 15px rgba(0,243,255,0.4);">
+        <!-- Upward Arrow with Bounce Effect -->
+        <i class="fa-solid fa-chevron-up text-sm transition-transform duration-300 group-hover:scale-125" style="color: #00f3ff; filter: drop-shadow(0 0 8px rgba(0,243,255,0.8));"></i>
+    </div>
+</button>
         <!-- Floating Elements -->
         <div class="absolute inset-0 z-0 overflow-hidden hidden md:block pointer-events-none">
             <!-- Green Card -->
@@ -1165,5 +1177,28 @@
             document.getElementById('calc-result').classList.remove('hidden');
         }
     </script>
+    // for sticky 
+   <script>
+  const scrollBtn = document.getElementById("scrollTopBtn");
+
+  // Jab user thoda niche scroll karega toh button smooth animation ke sath upar aayega
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 300) {
+      scrollBtn.classList.remove("opacity-0", "translate-y-5", "pointer-events-none");
+      scrollBtn.classList.add("opacity-100", "translate-y-0");
+    } else {
+      scrollBtn.classList.add("opacity-0", "translate-y-5", "pointer-events-none");
+      scrollBtn.classList.remove("opacity-100", "translate-y-0");
+    }
+  });
+
+  // Jab button par click hoga toh page smooth tarike se top par chala jayega
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
 </body>
 </html>
