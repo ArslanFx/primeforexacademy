@@ -1202,5 +1202,39 @@
     });
   });
 </script>
+<script>
+    // 1. Right-Click Disable karne ke liye
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        // Optional: Aap yahan koi alert ya message bhi show kar sakte hain
+    });
+
+    // 2. Keyboard Shortcuts (F12, Inspect, View Source) disable karne ke liye
+    document.addEventListener('keydown', function(e) {
+        // F12 key
+        if (e.key === 'F12') {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C (DevTools)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Ctrl+U (View Source)
+        if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+            e.preventDefault();
+            return false;
+        }
+
+        // Ctrl+S (Save Page)
+        if (e.ctrlKey && (e.key === 'S' || e.key === 's')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+</script>
 </body>
 </html>
