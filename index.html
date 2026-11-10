@@ -41,22 +41,22 @@
         }
 
         .cursor-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background-color: #00f3ff;
         }
 
         .cursor-outline {
-            width: 40px;
-            height: 40px;
+            width: 26px;
+            height: 26px;
             border: 1px solid rgba(0, 243, 255, 0.5);
             transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
         }
 
         /* Cursor Hover State - NO BLUR */
         body.hovering .cursor-outline {
-            width: 70px;
-            height: 70px;
+            width: 42px;
+            height: 42px;
             background-color: rgba(0, 243, 255, 0.1);
             border-color: #00f3ff;
         }
@@ -189,6 +189,164 @@
             box-shadow: 0 0 25px rgba(0, 243, 255, 0.8);
         }
 
+        .ai-chatbot {
+            position: fixed;
+            left: 24px;
+            bottom: 24px;
+            width: min(360px, calc(100vw - 32px));
+            background: rgba(11, 11, 16, 0.96);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.18);
+            z-index: 120;
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .ai-chatbot.collapsed {
+            width: 182px;
+            height: auto;
+            border-radius: 18px;
+        }
+
+        .ai-chatbot-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            background: rgba(0, 243, 255, 0.08);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.25);
+            gap: 10px;
+        }
+
+        .ai-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            color: #e6f9ff;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ai-brand .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00f3ff;
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.8);
+        }
+
+        .ai-chatbot-toggle {
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            background: rgba(0, 243, 255, 0.08);
+            color: #00f3ff;
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .ai-chatbot-body {
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(3, 3, 5, 0.9);
+        }
+
+        .ai-chatbot-body.hidden,
+        .ai-chatbot-input.hidden {
+            display: none;
+        }
+
+        .chat-message {
+            max-width: 88%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            line-height: 1.5;
+            font-size: 0.83rem;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .chat-message.bot {
+            align-self: flex-start;
+            background: rgba(15, 25, 30, 0.9);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            color: #dfeef0;
+        }
+
+        .chat-message.user {
+            align-self: flex-end;
+            background: rgba(0, 243, 255, 0.12);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            color: #f4fcff;
+        }
+
+        .chat-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            padding-top: 2px;
+        }
+
+        .chat-suggestions button {
+            border: 1px solid rgba(0, 243, 255, 0.28);
+            border-radius: 999px;
+            padding: 6px 9px;
+            background: rgba(0, 243, 255, 0.06);
+            color: #bfeef1;
+            font: 500 0.75rem 'Rajdhani', sans-serif;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+        }
+
+        .chat-suggestions button:hover,
+        .chat-suggestions button:focus-visible {
+            background: rgba(0, 243, 255, 0.16);
+            border-color: #00f3ff;
+            color: #fff;
+            outline: none;
+        }
+
+        .ai-chatbot-input {
+            display: flex;
+            gap: 8px;
+            padding: 12px 14px 14px;
+            border-top: 1px solid rgba(0, 243, 255, 0.18);
+            background: rgba(9, 9, 14, 0.96);
+        }
+
+        .ai-chatbot-input input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 243, 255, 0.28);
+            color: #f2f5f7;
+            padding: 10px 12px;
+            outline: none;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .ai-chatbot-input button {
+            background: #00f3ff;
+            color: #02050a;
+            border: none;
+            padding: 10px 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.06em;
+        }
+
         #chart-wrapper:fullscreen {
             width: 100vw !important;
             height: 100vh !important;
@@ -210,6 +368,16 @@
             }
             .whatsapp-float span { display: none; }
             .cursor-dot, .cursor-outline { display: none; }
+            .ai-chatbot {
+                left: 12px;
+                right: 12px;
+                width: auto;
+                bottom: 88px;
+            }
+            .ai-chatbot.collapsed {
+                width: 168px;
+                height: auto;
+            }
         }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -252,6 +420,34 @@
     <div class="cursor-outline" data-cursor-outline></div>
 
     <!-- NAVBAR -->
+    <div class="ai-chatbot collapsed" id="aiChatbot" role="button" tabindex="0" aria-label="Prime Ai chatbot">
+        <div class="ai-chatbot-header">
+            <div class="ai-brand">
+                <span class="dot"></span>
+                <span>Prime Ai</span>
+            </div>
+            <button class="ai-chatbot-toggle" id="chatToggle" aria-label="Toggle Prime Ai chat">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="ai-chatbot-body hidden" id="chatMessages">
+            <div class="chat-message bot">Hi! I can help with Forex basics, risk management, lot sizing, and academy courses. Ask me anything about trading.</div>
+            <div class="chat-suggestions" id="chatSuggestions" aria-label="Suggested trading questions">
+                <button type="button">What is Forex?</button>
+                <button type="button">How much should I risk per trade?</button>
+                <button type="button">How do I calculate lot size?</button>
+                <button type="button">What is a demo account?</button>
+                <button type="button">Should students start trading?</button>
+            </div>
+        </div>
+
+        <div class="ai-chatbot-input hidden" id="chatInputWrap">
+            <input id="chatInput" type="text" placeholder="Ask a trading question..." aria-label="Ask trading question">
+            <button id="sendChat">Send</button>
+        </div>
+    </div>
+
     <nav class="sticky top-0 z-50 bg-darkBg/95 backdrop-blur-md border-b border-neonGreen/20 transition-all duration-300 shadow-neon">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
@@ -1307,6 +1503,228 @@
 
             document.getElementById('result-value').innerText = lotSize.toFixed(2) + " Lots";
             document.getElementById('calc-result').classList.remove('hidden');
+        }
+
+        const aiChatbot = document.getElementById('aiChatbot');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendChatBtn = document.getElementById('sendChat');
+        const chatToggleBtn = document.getElementById('chatToggle');
+        const chatInputWrap = document.getElementById('chatInputWrap');
+
+        function addChatMessage(sender, text) {
+            if (!chatMessages) return;
+            const message = document.createElement('div');
+            message.className = `chat-message ${sender}`;
+            message.textContent = text;
+            chatMessages.appendChild(message);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getTradingReply(question) {
+            const q = question.toLowerCase().replace(/[^\w\s.%$/-]/g, ' ').replace(/\s+/g, ' ').trim();
+            const romanUrdu = /\b(kya|kia|kaise|kaisay|kaisa|kaisi|kitna|kitni|kitne|kyun|mujhe|aap|ap|mera|meri|mere|batao|btao|samjhao|samjha|hai|hain|ho|hota|hoti|hote|hoga|hogi|honge|karun|karo|krun|kron|karna|krna|karta|krta|nahi|nai|nahin|mein|ko|aur|sawal|jawab|chahiye|bata|bta|kese|kesy|kahan|kab|ky|kal|mausam|shuru|shuruaat|kitni|kitne|chahte|chahta|chahti|krna|karna|rakhna|nikalna|bana|banao|kaam|bari|bara|chota|choti|paisa|paise|nuksan|faida|seekhna|seekh|samajh|muje|apko|mujh|kr|kro|k|q)\b/.test(q);
+            const reply = (english, roman) => romanUrdu ? roman : english;
+
+            if (/^(hi|hello|hey|salam|assalam|assalamu alaikum|aoa)[!. ]*$/.test(q)) {
+                return reply(
+                    'Hello! I can explain Forex concepts, risk management, lot sizing, and academy courses. Ask me a specific trading question.',
+                    'Assalam-o-Alaikum! Main Forex ke concepts, risk management, lot size aur academy courses samjha sakta hoon. Apna specific sawal poochhein.'
+                );
+            }
+            if (/(student|school|college|university|taleem|parhai|parh raha|parh rahi|study)/.test(q) &&
+                /(trade|trading|forex|start|shuru|karna|karun|karo|chahta|chahti|chah|should|can i)/.test(q)) {
+                return reply(
+                    'You can learn trading while studying, but treat it as education—not dependable income. Start with free learning and a demo account, keep your studies first, and never risk tuition, borrowed, or essential money. If you are under your country’s legal trading age, do not open a live account.',
+                    'Aap parhai ke saath trading seekh sakte hain, lekin ise taleem samjhein, pakki kamai nahi. Free learning aur demo account se shuru karein, parhai ko pehle rakhein, aur fees, qarz ya zaroori kharch ka paisa risk na karein. Agar aap apne mulk ki legal trading age se chhote hain to live account na kholein.'
+                );
+            }
+            if (/(course|academy|learn|training|mentor|module|enroll|seekh|sikh|course fee|fees)/.test(q)) {
+                return reply(
+                    'Prime Forex Academy covers beginner Forex, advanced strategy, price action, and risk management. For current course details or enrollment, contact the academy through the Enroll Now WhatsApp link.',
+                    'Prime Forex Academy mein beginner Forex, advanced strategy, price action aur risk management ki training milti hai. Course details ya admission ke liye Enroll Now WhatsApp link se academy se rabta karein.'
+                );
+            }
+            if (/(halal|haram|islam|muslim|sood|riba|swap.free)/.test(q)) {
+                return reply(
+                    'Whether Forex trading is permissible depends on the account structure and scholarly interpretation. Swap-free accounts do not settle every concern. Please ask a qualified scholar you trust.',
+                    'Forex trading halal hai ya nahi, iska jawab account ke structure aur ulema ki rai par depend karta hai. Sirf swap-free account har maslay ka hal nahi hota. Apne bharosemand qualified alim se mashwara karein.'
+                );
+            }
+            if (/(lot size|lots|position size|volume|lot calculation|lot calculate|lot kitna|lot nikal)/.test(q)) {
+                return reply(
+                    'Lot size is based on your account balance, risk percentage, stop-loss distance, and the pair’s pip value. First calculate risk amount = balance × risk %. Then use a position-size calculator with the correct pip value for your broker and currency. Share those figures if you want help with the calculation; this page’s risk calculator is also available.',
+                    'Lot size balance, risk percentage, stop-loss ke pips aur pair ki pip value par depend karta hai. Pehle risk amount nikalein: balance × risk %. Phir broker aur currency ke mutabiq sahi pip value ke saath position-size calculator use karein. Ye numbers bhejein to main hisaab samjha dunga; page par risk calculator bhi hai.'
+                );
+            }
+            if (/(risk|management|stop loss|stoploss|\bsl\b|capital protect|account bach|nuksan|loss limit)/.test(q)) {
+                return reply(
+                    'Risk management limits how much you can lose. Many traders keep risk around 1% of their account per trade, set a stop loss before entering, and avoid increasing risk to recover losses. This is general education, not a guaranteed strategy.',
+                    'Risk management ka maqsad loss ko limit karna hai. Kai traders har trade par account ka taqreeban 1% risk karte hain, entry se pehle stop loss lagate hain aur loss recover karne ke liye risk nahi barhate. Ye general taleem hai, profit ki guarantee nahi.'
+                );
+            }
+            if (/(pip|pips|point|pip value)/.test(q)) {
+                return reply(
+                    'A pip is a standard unit for measuring a currency pair’s price movement. It is usually 0.0001 for most pairs and 0.01 for JPY pairs; broker quote precision can add a fractional pip.',
+                    'Pip currency pair ki price movement naapne ki standard unit hai. Aksar pairs mein 0.0001 aur JPY pairs mein 0.01 hota hai; broker ki quote mein fractional pip bhi dikh sakta hai.'
+                );
+            }
+            if (/(leverage|margin|leverag|qarz|borrow)/.test(q)) {
+                return reply(
+                    'Leverage lets you control a larger position with less margin, but it magnifies losses as well as gains and can lead to rapid liquidation. Check your broker’s margin rules and use conservative position sizes.',
+                    'Leverage kam margin se bari position control karne deta hai, lekin profit ke saath loss bhi barha deta hai aur account jaldi liquidate ho sakta hai. Broker ke margin rules samjhein aur chhoti, ehtiyaati position rakhein.'
+                );
+            }
+            if (/(spread|commission|swap|fee|charges)/.test(q)) {
+                return reply(
+                    'Spread is the difference between a pair’s buy and sell prices. Brokers may also charge commission or overnight swap; costs vary by account, instrument, and market conditions. Check the broker’s fee schedule before trading.',
+                    'Spread buy aur sell price ka farq hota hai. Broker commission ya overnight swap bhi le sakta hai; charges account, instrument aur market ke hisaab se badalte hain. Trade se pehle broker ki fee details check karein.'
+                );
+            }
+            if (/(demo|practice|paper trad|virtual|demo account)/.test(q)) {
+                return reply(
+                    'A demo account lets you practise with virtual funds. Use it to learn the platform and test a written strategy, but remember that live trading emotions and execution can differ.',
+                    'Demo account mein virtual paison se practice hoti hai. Platform samajhne aur likhi hui strategy test karne ke liye use karein, lekin live trading ke emotions aur execution mukhtalif ho sakte hain.'
+                );
+            }
+            if (/(profit|return|make money|income|earn|kamai|kitna kama|paisa bana)/.test(q)) {
+                return reply(
+                    'There is no reliable fixed income or guaranteed return in Forex; losses are possible, especially for beginners. Focus first on learning, a demo record, and protecting capital—never trade money you cannot afford to lose.',
+                    'Forex mein fixed kamai ya guaranteed return nahi hota; khas taur par beginners ko loss ho sakta hai. Pehle learning, demo par record aur capital bachane par focus karein—woh paisa trade na karein jiska loss bardasht na ho.'
+                );
+            }
+            if (/(start|beginner|100|deposit|minimum|shuru|shuruat|account khol)/.test(q)) {
+                return reply(
+                    'If you are new, begin with Forex basics and a demo account rather than depositing money immediately. Minimum deposits depend on the broker, and a small account does not make trading low-risk.',
+                    'Agar aap naye hain to foran paisa deposit karne ke bajaye Forex basics aur demo account se shuru karein. Minimum deposit broker par depend karta hai; chhota account hone se trading ka risk kam nahi ho jata.'
+                );
+            }
+            if (/(buy|sell|eurusd|gbpusd|xauusd|gold|crypto|signal|entry|exit|trade karun|trade lena|market analysis|analysis)/.test(q)) {
+                return reply(
+                    'I do not have live market prices or chart data, so I cannot tell you whether to buy or sell now. For an educational analysis, share the instrument, timeframe, and your chart context. Always set a stop loss and decide your risk before entering.',
+                    'Mere paas live market price ya chart data nahi, is liye main abhi buy ya sell ka signal nahi de sakta. Taleemi analysis ke liye instrument, timeframe aur chart ki details bhejein. Entry se pehle stop loss aur apna risk tay karein.'
+                );
+            }
+            if (/(strategy|setup|trend|support|resistance|price action|order block|liquidity|entry plan)/.test(q)) {
+                return reply(
+                    'A trading plan should define the market condition, entry trigger, invalidation/stop-loss level, and risk-to-reward before a trade. Test one clear setup on historical or demo data; no strategy wins every trade.',
+                    'Trading plan mein market condition, entry ka signal, setup ghalat sabit hone ka level/stop loss aur risk-to-reward pehle tay hona chahiye. Ek clear setup ko historical ya demo data par test karein; koi strategy har trade nahi jeetti.'
+                );
+            }
+            if (/(market hours|trading hours|session|london|new york|asia session|market kab)/.test(q)) {
+                return reply(
+                    'Forex is generally traded 24 hours a day from Monday to Friday, across global sessions. Exact session times change with daylight-saving time and your timezone; check a current market-hours calendar.',
+                    'Forex aam tor par Monday se Friday tak global sessions mein 24 ghante trade hota hai. Session ke exact waqt daylight-saving aur aapke timezone se badal sakte hain; updated market-hours calendar check karein.'
+                );
+            }
+            if (/(forex|currency pair|currency|market|forex kya|forex kia)/.test(q)) {
+                return reply(
+                    'Forex is the market where currencies are exchanged in pairs, such as EUR/USD. A pair’s price changes with supply, demand, and economic events; trading carries a risk of loss.',
+                    'Forex woh market hai jahan currencies pairs mein trade hoti hain, jaise EUR/USD. Pair ki price supply, demand aur economic news se badalti hai; trading mein loss ka risk hota hai.'
+                );
+            }
+            if (/(candlestick|candle|doji|engulfing|hammer|chart pattern|candle pattern)/.test(q)) {
+                return reply(
+                    'Candlesticks show open, high, low, and close prices for a time period. Patterns such as doji or engulfing candles can provide context, but they are not reliable signals by themselves; confirm with trend, levels, and risk controls.',
+                    'Candlestick kisi waqt ki open, high, low aur close price dikhati hai. Doji ya engulfing jaise patterns context de sakte hain, magar akele pakke signal nahi hote; trend, levels aur risk management ke saath confirm karein.'
+                );
+            }
+            if (/(broker|broker choose|broker select|regulated|regulation|withdraw|withdrawal|deposit method)/.test(q)) {
+                return reply(
+                    'Before choosing a broker, check whether it is licensed by a reputable regulator, read its fee and withdrawal terms, and verify that it serves your country. Avoid brokers promising guaranteed profits. I cannot endorse a specific broker.',
+                    'Broker chunne se pehle dekhein ke woh bharosemand regulator se licensed hai, fees aur withdrawal terms parhein, aur confirm karein ke aapke mulk mein service deta hai. Guaranteed profit ka wada karne walon se bachain. Main kisi khaas broker ki sifarish nahi karta.'
+                );
+            }
+            if (/(trading journal|trade journal|journal|track.*trade|record.*trade)/.test(q)) {
+                return reply(
+                    'A trading journal records the instrument, setup, entry, stop, target, risk, result, and a short note about your decision. Review it regularly to find repeated mistakes; do not judge a strategy from only a few trades.',
+                    'Trading journal mein instrument, setup, entry, stop loss, target, risk, result aur apne faisle ka chhota note likhein. Bar bar hone wali ghaltiyan dekhne ke liye isay regular review karein; chand trades se strategy ka faisla na karein.'
+                );
+            }
+
+            return reply(
+                'Sorry, I can only help with Forex and trading-related questions. Please ask me about a trading topic, such as risk, lot size, or a demo account.',
+                'Maazrat, main sirf Forex aur trading se mutaliq sawalon mein madad kar sakta hoon. Bara-e-karam trading ka sawal poochhein, jaise risk, lot size ya demo account ke baare mein.'
+            );
+        }
+
+        function submitChat() {
+            if (!chatInput) return;
+            const value = chatInput.value.trim();
+            if (!value) return;
+
+            addChatMessage('user', value);
+            chatInput.value = '';
+            setTimeout(() => {
+                addChatMessage('bot', getTradingReply(value));
+            }, 300);
+        }
+
+        if (sendChatBtn) {
+            sendChatBtn.addEventListener('click', submitChat);
+        }
+
+        const chatSuggestions = document.getElementById('chatSuggestions');
+        if (chatSuggestions) {
+            chatSuggestions.addEventListener('click', (event) => {
+                const button = event.target.closest('button');
+                if (!button || !chatInput) return;
+                chatInput.value = button.textContent.trim();
+                button.remove();
+                submitChat();
+            });
+        }
+
+        if (chatInput) {
+            chatInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    submitChat();
+                }
+            });
+        }
+
+        function toggleChatWidget() {
+            if (!aiChatbot) return;
+            aiChatbot.classList.toggle('collapsed');
+            const isCollapsed = aiChatbot.classList.contains('collapsed');
+
+            if (chatMessages) {
+                chatMessages.classList.toggle('hidden', isCollapsed);
+            }
+            if (chatInputWrap) {
+                chatInputWrap.classList.toggle('hidden', isCollapsed);
+            }
+
+            const icon = chatToggleBtn ? chatToggleBtn.querySelector('i') : null;
+            if (icon) {
+                icon.className = isCollapsed ? 'fa-solid fa-plus' : 'fa-solid fa-minus';
+            }
+        }
+
+        if (chatToggleBtn) {
+            chatToggleBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                toggleChatWidget();
+            });
+        }
+
+        if (aiChatbot) {
+            aiChatbot.addEventListener('click', () => {
+                if (aiChatbot.classList.contains('collapsed')) {
+                    toggleChatWidget();
+                }
+            });
+
+            aiChatbot.addEventListener('keydown', (event) => {
+                if (event.target !== aiChatbot) return;
+
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    if (aiChatbot.classList.contains('collapsed')) {
+                        toggleChatWidget();
+                    }
+                }
+            });
         }
     </script>
     
