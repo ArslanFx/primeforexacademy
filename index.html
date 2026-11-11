@@ -284,6 +284,36 @@
             color: #dfeef0;
         }
 
+        .chat-typing {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 132px;
+            min-height: 22px;
+        }
+
+        .chat-typing-label {
+            color: #bfeef1;
+            font-size: 0.78rem;
+        }
+
+        .chat-typing span:not(.chat-typing-label) {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #00f3ff;
+            opacity: 0.35;
+            animation: chat-typing-pulse 1s infinite ease-in-out;
+        }
+
+        .chat-typing span:nth-child(3) { animation-delay: 0.15s; }
+        .chat-typing span:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes chat-typing-pulse {
+            0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+            30% { opacity: 1; transform: translateY(-3px); }
+        }
+
         .chat-message.user {
             align-self: flex-end;
             background: rgba(0, 243, 255, 0.12);
@@ -1519,6 +1549,29 @@
             message.textContent = text;
             chatMessages.appendChild(message);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            return message;
+        }
+
+        function addTypingIndicator() {
+            if (!chatMessages) return null;
+            const indicator = document.createElement('div');
+            indicator.className = 'chat-message bot chat-typing';
+            indicator.setAttribute('role', 'status');
+            indicator.setAttribute('aria-label', 'Prime Ai is typing');
+            const label = document.createElement('span');
+            label.className = 'chat-typing-label';
+            label.textContent = 'Prime Ai is typing';
+            indicator.appendChild(label);
+
+            for (let i = 0; i < 3; i += 1) {
+                const dot = document.createElement('span');
+                dot.setAttribute('aria-hidden', 'true');
+                indicator.appendChild(dot);
+            }
+
+            chatMessages.appendChild(indicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return indicator;
         }
 
         function getTradingReply(question) {
@@ -1655,9 +1708,12 @@
 
             addChatMessage('user', value);
             chatInput.value = '';
+            const typingIndicator = addTypingIndicator();
+            const reply = getTradingReply(value);
             setTimeout(() => {
-                addChatMessage('bot', getTradingReply(value));
-            }, 300);
+                if (typingIndicator) typingIndicator.remove();
+                addChatMessage('bot', reply);
+            }, 3000);
         }
 
         if (sendChatBtn) {
