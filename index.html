@@ -6,6 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prime Forex Academy | Master the Markets</title>
+    <meta name="description" content="Learn Forex fundamentals, technical analysis, and risk management with Prime Forex Academy. Explore course modules and use practical trading tools.">
+    <meta name="theme-color" content="#030305">
+    <meta property="og:title" content="Prime Forex Academy | Master the Markets">
+    <meta property="og:description" content="Learn Forex fundamentals, technical analysis, and risk management with Prime Forex Academy.">
 
     <link class="rounded" rel="icon" type="image/png" href="https://img.icons8.com/neon/96/bullish.png">
 
@@ -25,10 +29,19 @@
             overflow-x: hidden;
             background-color: #030305;
             color: #e0e0e0;
-            cursor: auto; /* ORIGINAL CURSOR VISIBLE */
+            cursor: auto;
         }
 
-        /* --- Custom Cursor Styles --- */
+        /* --- Neon cyan fire cursor --- */
+        #cursor-fire-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998;
+            pointer-events: none;
+        }
+
         .cursor-dot,
         .cursor-outline {
             position: fixed;
@@ -38,31 +51,34 @@
             border-radius: 50%;
             z-index: 9999;
             pointer-events: none;
+            opacity: 0;
+            will-change: transform;
         }
 
         .cursor-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #00f3ff;
+            width: 5px;
+            height: 5px;
+            background: #00E5F2;
+            box-shadow: 0 0 8px #00E5F2, 0 0 16px rgba(0, 229, 242, 0.65);
         }
 
         .cursor-outline {
-            width: 26px;
-            height: 26px;
-            border: 1px solid rgba(0, 243, 255, 0.5);
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+            width: 24px;
+            height: 24px;
+            border: 1px solid rgba(0, 229, 242, 0.65);
+            box-shadow: 0 0 12px rgba(0, 229, 242, 0.28), inset 0 0 8px rgba(0, 229, 242, 0.12);
+            transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* Cursor Hover State - NO BLUR */
-        body.hovering .cursor-outline {
-            width: 42px;
-            height: 42px;
-            background-color: rgba(0, 243, 255, 0.1);
-            border-color: #00f3ff;
+        body.fire-cursor-enabled.fire-cursor-hover .cursor-outline {
+            width: 38px;
+            height: 38px;
+            border-color: #00E5F2;
+            box-shadow: 0 0 16px rgba(0, 229, 242, 0.55), inset 0 0 10px rgba(0, 229, 242, 0.2);
         }
-        
-        body.hovering .cursor-dot {
-            background-color: white;
+
+        body.fire-cursor-enabled.fire-cursor-hover .cursor-dot {
+            box-shadow: 0 0 10px #00E5F2, 0 0 20px rgba(0, 229, 242, 0.8);
         }
 
         /* Cyber Grid Background */
@@ -284,7 +300,14 @@
             color: #dfeef0;
         }
 
-        .chat-typing {
+        .chat-message.user {
+            align-self: flex-end;
+            background: rgba(0, 243, 255, 0.12);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            color: #f4fcff;
+        }
+
+        .chat-message.chat-typing {
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -312,13 +335,6 @@
         @keyframes chat-typing-pulse {
             0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
             30% { opacity: 1; transform: translateY(-3px); }
-        }
-
-        .chat-message.user {
-            align-self: flex-end;
-            background: rgba(0, 243, 255, 0.12);
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            color: #f4fcff;
         }
 
         .chat-suggestions {
@@ -397,7 +413,6 @@
                 padding: 8px 16px;
             }
             .whatsapp-float span { display: none; }
-            .cursor-dot, .cursor-outline { display: none; }
             .ai-chatbot {
                 left: 12px;
                 right: 12px;
@@ -410,9 +425,41 @@
             }
         }
 
+        @media (pointer: coarse), (max-width: 768px) {
+            #cursor-fire-canvas { display: none; }
+            .cursor-dot, .cursor-outline { display: none; }
+        }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #030305; }
         ::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 4px; }
+
+        .reading-progress {
+            position: fixed;
+            inset: 0 auto auto 0;
+            width: 0;
+            height: 3px;
+            background: #00f3ff;
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.75);
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .course-filter:focus-visible,
+        #mobile-menu-btn:focus-visible,
+        #scrollTopBtn:focus-visible {
+            outline: 2px solid #00f3ff;
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 
     <script>
@@ -445,24 +492,25 @@
 
 <body class="bg-darkBg text-gray-200 font-sans antialiased chart-bg relative">
 
-    <!-- CUSTOM CURSOR ELEMENTS -->
+    <!-- CUSTOM DESKTOP CURSOR -->
+    <canvas id="cursor-fire-canvas" aria-hidden="true"></canvas>
     <div class="cursor-dot" data-cursor-dot></div>
     <div class="cursor-outline" data-cursor-outline></div>
 
     <!-- NAVBAR -->
-    <div class="ai-chatbot collapsed" id="aiChatbot" role="button" tabindex="0" aria-label="Prime Ai chatbot">
+    <div class="ai-chatbot collapsed" id="aiChatbot" role="region" aria-label="Prime Ai chatbot">
         <div class="ai-chatbot-header">
             <div class="ai-brand">
                 <span class="dot"></span>
                 <span>Prime Ai</span>
             </div>
-            <button class="ai-chatbot-toggle" id="chatToggle" aria-label="Toggle Prime Ai chat">
+            <button class="ai-chatbot-toggle" id="chatToggle" type="button" aria-label="Open Prime Ai chat" aria-expanded="false" aria-controls="chatMessages chatInputWrap">
                 <i class="fa-solid fa-plus"></i>
             </button>
         </div>
 
         <div class="ai-chatbot-body hidden" id="chatMessages">
-            <div class="chat-message bot">Hi! I can help with Forex basics, risk management, lot sizing, and academy courses. Ask me anything about trading.</div>
+            <div class="chat-message bot">Hi! I can explain Forex basics, risk management, lot sizing, and academy courses. This is general education—not financial advice or live market data.</div>
             <div class="chat-suggestions" id="chatSuggestions" aria-label="Suggested trading questions">
                 <button type="button">What is Forex?</button>
                 <button type="button">How much should I risk per trade?</button>
@@ -499,21 +547,15 @@
 
                 <!-- UPDATED: Buttons Small Size & Red Hover for Logout -->
                 <div class="hidden md:flex items-center gap-3">
-                    <a href="#home" onclick="window.location.reload()" 
-                        class="px-4 py-2 border border-gray-600 text-gray-400 text-sm font-display font-semibold rounded-none hover:text-neonRed hover:border-neonRed hover:shadow-neon-pink transition-all interactive-cursor">
-                        Logout
-                    </a>
                     <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20Prime%20Forex%20Academy."
-                        target="_blank"
+                        target="_blank" rel="noopener noreferrer"
                         class="px-4 py-2 bg-transparent border border-neonGreen text-neonGreen text-sm font-display font-semibold rounded-none hover:bg-neonGreen hover:text-black transition-all duration-300 shadow-neon hover:shadow-neon-thick interactive-cursor clip-path-slant">
                         Enroll Now
                     </a>
                 </div>
 
                 <div class="md:hidden interactive-cursor">
-                    <button
-                        onclick="const menu = document.getElementById('mobile-menu'); menu.classList.toggle('hidden'); const icon = this.querySelector('i'); if(menu.classList.contains('hidden')){ icon.className='fa-solid fa-bars text-2xl'; } else { icon.className='fa-solid fa-xmark text-2xl'; }"
-                        id="mobile-menu-btn" class="text-gray-400 hover:text-neonGreen focus:outline-none">
+                    <button type="button" id="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu" class="text-gray-400 hover:text-neonGreen focus:outline-none">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -521,38 +563,26 @@
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden bg-darkCard border-b border-neonGreen/20 px-4 pt-2 pb-6 space-y-3">
-            <a href="#home"
-                onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';"
-                class="block px-3 py-2 rounded-none text-base font-display font-bold text-neonGreen bg-darkBg border-l-2 border-neonGreen interactive-cursor">Home</a>
-            <a href="#analysis"
-                onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';"
-                class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Chart Analysis</a>
-            <a href="#courses"
-                onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';"
-                class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Courses</a>
-            <a href="#calculator"
-                onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';"
-                class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Risk Calculator</a>
-            <a href="#team"
-                onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';"
-                class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Team</a>
-            
-             <a href="#home" onclick="window.location.reload(); document.getElementById('mobile-menu').classList.add('hidden');"
-                class="block px-3 py-2 rounded-none text-base font-medium text-gray-400 hover:text-neonRed border-b border-gray-800 interactive-cursor">Logout</a>
-               
+            <a href="#home" data-mobile-nav-link class="block px-3 py-2 rounded-none text-base font-display font-bold text-neonGreen bg-darkBg border-l-2 border-neonGreen interactive-cursor">Home</a>
+            <a href="#analysis" data-mobile-nav-link class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Chart Analysis</a>
+            <a href="#courses" data-mobile-nav-link class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Courses</a>
+            <a href="#faq" data-mobile-nav-link class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">FAQ</a>
+            <a href="#calculator" data-mobile-nav-link class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Risk Calculator</a>
+            <a href="#team" data-mobile-nav-link class="block px-3 py-2 rounded-none text-base font-medium text-gray-300 hover:text-white hover:bg-darkCard interactive-cursor">Team</a>
             <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20Prime%20Forex%20Academy."
-                target="_blank"
-                onclick="document.getElementById('mobile-menu').classList.add('hidden'); document.querySelector('#mobile-menu-btn i').className='fa-solid fa-bars text-2xl';"
+                target="_blank" rel="noopener noreferrer"
                 class="w-full text-center px-3 py-2.5 rounded-none text-base font-display font-bold bg-neonGreen text-black shadow-neon block interactive-cursor">
                 Enroll Now
             </a>
         </div>
     </nav>
 
+    <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+
     <header id="home"
         class="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden px-4 py-16">
        <!-- STICKY SCROLL TO TOP ARROW -->
-<button id="scrollTopBtn" class="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-2 group opacity-0 translate-y-5 pointer-events-none transition-all duration-500">
+<button id="scrollTopBtn" type="button" aria-label="Scroll back to top" class="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-2 group opacity-0 translate-y-5 pointer-events-none transition-all duration-500">
     <!-- Text Label -->
     <span class="text-[#00f3ff] text-[10px] font-mono tracking-[0.2em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         TOP
@@ -611,7 +641,7 @@
                 </a>
 
                 <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20Join%20the%20Prime%20Forex%20Academy."
-                    target="_blank"
+                    target="_blank" rel="noopener noreferrer"
                     class="w-full sm:w-auto px-8 py-4 bg-darkCard border border-gray-600 text-white font-display font-semibold rounded-none hover:border-neonGreen hover:text-neonGreen transition-colors text-center clip-path-slant interactive-cursor">
                     Join Academy
                 </a>
@@ -660,28 +690,33 @@
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script type="text/javascript">
 
-        new TradingView.widget({
-            "width": "100%",
-            "height": "100%",
-            "symbol": "TVC:GOLD",
-            "interval": "240",
-            "timezone": "Asia/Karachi",
-            "theme": "dark",
-            "style": "1",
-            "locale": "en",
-            "toolbar_bg": "#0b0b10",
-            "enable_publishing": false,
-            "allow_symbol_change": true,
-            "hide_side_toolbar": false, 
-            "container_id": "tradingview_chart",
-            // INDICATORS REMOVED AS REQUESTED
-        });
+        const chartContainer = document.getElementById('tradingview_chart');
+        if (window.TradingView && chartContainer) {
+            new TradingView.widget({
+                "width": "100%",
+                "height": "100%",
+                "symbol": "TVC:GOLD",
+                "interval": "240",
+                "timezone": "Asia/Karachi",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#0b0b10",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "hide_side_toolbar": false,
+                "container_id": "tradingview_chart"
+            });
+        } else if (chartContainer) {
+            chartContainer.textContent = 'Live chart is unavailable right now. Please check your connection and try again.';
+            chartContainer.classList.add('flex', 'items-center', 'justify-center', 'text-center', 'text-gray-400', 'font-mono', 'p-6');
+        }
 
         const toggleBtn = document.getElementById('toggle-fullscreen-btn');
         const closeBtn = document.getElementById('close-fullscreen-btn');
         const wrapper = document.getElementById('chart-wrapper');
 
-        toggleBtn.addEventListener('click', () => {
+        if (toggleBtn && wrapper) toggleBtn.addEventListener('click', () => {
             if (wrapper.requestFullscreen) {
                 wrapper.requestFullscreen();
             } else if (wrapper.webkitRequestFullscreen) { /* Safari */
@@ -691,7 +726,7 @@
             }
         });
 
-        closeBtn.addEventListener('click', () => {
+        if (closeBtn) closeBtn.addEventListener('click', () => {
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             } else if (document.webkitExitFullscreen) { /* Safari */
@@ -701,44 +736,201 @@
             }
         });
 
-        document.addEventListener('fullscreenchange', () => {
-            if (document.fullscreenElement) {
-                closeBtn.classList.remove('hidden');
-            } else {
-                closeBtn.classList.add('hidden');
-            }
+        const updateFullscreenButton = () => {
+            const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            if (closeBtn) closeBtn.classList.toggle('hidden', !fullscreenElement);
+        };
+        ['fullscreenchange', 'webkitfullscreenchange', 'MSFullscreenChange'].forEach(eventName => {
+            document.addEventListener(eventName, updateFullscreenButton);
         });
 
-        // Custom Cursor Logic
+        /* Desktop-only neon cyan cursor and bounded canvas fire trail. */
         const cursorDot = document.querySelector('[data-cursor-dot]');
         const cursorOutline = document.querySelector('[data-cursor-outline]');
-        
-        window.addEventListener("mousemove", function (e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
+        const cursorCanvas = document.getElementById('cursor-fire-canvas');
+        const cursorContext = cursorCanvas ? cursorCanvas.getContext('2d') : null;
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 769px)');
+        const reduceCursorMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const fireParticles = [];
+        const maxFireParticles = 100;
+        let cursorFrame = null;
+        let lastFrameTime = 0;
+        let cursorX = -100;
+        let cursorY = -100;
+        let targetCursorX = -100;
+        let targetCursorY = -100;
+        let previousPointerX = null;
+        let previousPointerY = null;
+        let cursorVisible = false;
+        let viewportDpr = 1;
 
-            // Dot follows instantly
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
+        function resizeCursorCanvas() {
+            if (!cursorCanvas || !cursorContext) return;
+            viewportDpr = Math.min(window.devicePixelRatio || 1, 2);
+            cursorCanvas.width = Math.round(window.innerWidth * viewportDpr);
+            cursorCanvas.height = Math.round(window.innerHeight * viewportDpr);
+            cursorContext.setTransform(viewportDpr, 0, 0, viewportDpr, 0, 0);
+        }
 
-            // Outline follows with lag (Smooth delay)
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
-        });
-
-        // Add hover effects for interactive elements
-        const interactiveElements = document.querySelectorAll('.interactive-cursor, a, button, input, select, .faq-question');
-        
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                document.body.classList.add('hovering');
+        function createFireParticle(x, y, velocityX, velocityY) {
+            const size = 5 + Math.random() * 9;
+            fireParticles.push({
+                x: x + (Math.random() - 0.5) * 7,
+                y: y + (Math.random() - 0.5) * 7,
+                vx: -velocityX * 0.08 + (Math.random() - 0.5) * 0.65,
+                vy: -1.05 - Math.random() * 1.45 - Math.abs(velocityY) * 0.025,
+                size,
+                life: 0.42 + Math.random() * 0.34,
+                maxLife: 0.76,
+                angle: Math.random() * Math.PI * 2,
+                spin: (Math.random() - 0.5) * 0.075
             });
-            el.addEventListener('mouseleave', () => {
-                document.body.classList.remove('hovering');
+            if (fireParticles.length > maxFireParticles) {
+                fireParticles.splice(0, fireParticles.length - maxFireParticles);
+            }
+        }
+
+        function drawFlameParticle(particle, opacity) {
+            const size = particle.size * (0.28 + opacity * 0.72);
+            cursorContext.save();
+            cursorContext.translate(particle.x, particle.y);
+            cursorContext.rotate(particle.angle);
+            cursorContext.globalAlpha = opacity;
+            cursorContext.shadowColor = '#00E5F2';
+            cursorContext.shadowBlur = size * 1.8;
+            cursorContext.fillStyle = '#00E5F2';
+            cursorContext.beginPath();
+            cursorContext.moveTo(0, -size * 1.4);
+            cursorContext.bezierCurveTo(size * 0.95, -size * 0.45, size * 0.6, size * 0.55, 0, size);
+            cursorContext.bezierCurveTo(-size * 0.55, size * 0.5, -size * 0.9, -size * 0.35, 0, -size * 1.4);
+            cursorContext.fill();
+            cursorContext.restore();
+        }
+
+        function animateFireCursor(timestamp) {
+            cursorFrame = null;
+            if (!cursorContext || document.hidden) return;
+            const delta = lastFrameTime ? Math.min((timestamp - lastFrameTime) / 16.67, 2) : 1;
+            lastFrameTime = timestamp;
+            cursorContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+            const easing = reduceCursorMotion.matches ? 1 : 0.24;
+            cursorX += (targetCursorX - cursorX) * easing;
+            cursorY += (targetCursorY - cursorY) * easing;
+            if (cursorDot) {
+                cursorDot.style.transform = `translate3d(${targetCursorX}px, ${targetCursorY}px, 0) translate(-50%, -50%)`;
+            }
+            if (cursorOutline) {
+                cursorOutline.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+            }
+
+            for (let index = fireParticles.length - 1; index >= 0; index -= 1) {
+                const particle = fireParticles[index];
+                particle.life -= 0.016 * delta;
+                if (particle.life <= 0) {
+                    fireParticles.splice(index, 1);
+                    continue;
+                }
+                particle.x += particle.vx * delta;
+                particle.y += particle.vy * delta;
+                particle.vx *= 0.985;
+                particle.angle += particle.spin * delta;
+                drawFlameParticle(particle, Math.pow(particle.life / particle.maxLife, 1.5));
+            }
+
+            const cursorIsMoving = Math.abs(targetCursorX - cursorX) > 0.35 ||
+                Math.abs(targetCursorY - cursorY) > 0.35;
+            if (cursorIsMoving || fireParticles.length > 0) {
+                cursorFrame = window.requestAnimationFrame(animateFireCursor);
+            } else {
+                lastFrameTime = 0;
+            }
+        }
+
+        function startCursorAnimation() {
+            if (cursorFrame === null && !document.hidden) {
+                cursorFrame = window.requestAnimationFrame(animateFireCursor);
+            }
+        }
+
+        function updateCursorSupport() {
+            const enabled = finePointer.matches && !reduceCursorMotion.matches &&
+                cursorCanvas && cursorContext;
+            document.body.classList.toggle('fire-cursor-enabled', Boolean(enabled));
+            if (!enabled) {
+                if (cursorFrame !== null) window.cancelAnimationFrame(cursorFrame);
+                cursorFrame = null;
+                fireParticles.length = 0;
+                if (cursorContext) cursorContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                if (cursorDot) cursorDot.style.opacity = '0';
+                if (cursorOutline) cursorOutline.style.opacity = '0';
+            }
+        }
+
+        if (cursorCanvas && cursorContext) {
+            resizeCursorCanvas();
+            updateCursorSupport();
+            window.addEventListener('resize', resizeCursorCanvas, { passive: true });
+            finePointer.addEventListener('change', updateCursorSupport);
+            reduceCursorMotion.addEventListener('change', updateCursorSupport);
+
+            window.addEventListener('pointermove', event => {
+                if (!document.body.classList.contains('fire-cursor-enabled') || event.pointerType === 'touch') return;
+                targetCursorX = event.clientX;
+                targetCursorY = event.clientY;
+                cursorVisible = true;
+                if (cursorDot) cursorDot.style.opacity = '1';
+                if (cursorOutline) cursorOutline.style.opacity = '1';
+
+                if (previousPointerX !== null) {
+                    const dx = targetCursorX - previousPointerX;
+                    const dy = targetCursorY - previousPointerY;
+                    const distance = Math.hypot(dx, dy);
+                    const particleCount = Math.min(5, Math.floor(distance / 5));
+                    for (let index = 0; index < particleCount; index += 1) {
+                        const progress = (index + 1) / particleCount;
+                        createFireParticle(
+                            previousPointerX + dx * progress,
+                            previousPointerY + dy * progress,
+                            dx,
+                            dy
+                        );
+                    }
+                }
+                previousPointerX = targetCursorX;
+                previousPointerY = targetCursorY;
+                startCursorAnimation();
+            }, { passive: true });
+
+            window.addEventListener('pointerover', event => {
+                if (!document.body.classList.contains('fire-cursor-enabled')) return;
+                if (event.target.closest('a, button, input, select, textarea, [role="button"], .interactive-cursor')) {
+                    document.body.classList.add('fire-cursor-hover');
+                }
+            }, { passive: true });
+            window.addEventListener('pointerout', event => {
+                if (event.relatedTarget instanceof Element &&
+                    event.relatedTarget.closest('a, button, input, select, textarea, [role="button"], .interactive-cursor')) return;
+                document.body.classList.remove('fire-cursor-hover');
+            }, { passive: true });
+            document.addEventListener('pointerleave', () => {
+                cursorVisible = false;
+                previousPointerX = null;
+                previousPointerY = null;
+                if (cursorDot) cursorDot.style.opacity = '0';
+                if (cursorOutline) cursorOutline.style.opacity = '0';
+                document.body.classList.remove('fire-cursor-hover');
             });
-        });
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && cursorFrame !== null) {
+                    window.cancelAnimationFrame(cursorFrame);
+                    cursorFrame = null;
+                    lastFrameTime = 0;
+                } else if (!document.hidden && (fireParticles.length > 0 || cursorVisible)) {
+                    startCursorAnimation();
+                }
+            });
+        }
 
     </script>  
 
@@ -880,9 +1072,24 @@
             <p class="text-gray-400 font-mono">Select standard modules structured specifically around modern retail structural frameworks.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="mb-8 space-y-4" aria-label="Find a course">
+            <label for="course-search" class="sr-only">Search courses</label>
+            <input id="course-search" type="search" placeholder="Search courses or topics..."
+                class="w-full bg-darkCard border border-gray-700 text-white p-3 font-mono focus:border-neonGreen focus:outline-none"
+                aria-controls="course-grid">
+            <div class="flex flex-wrap gap-2" role="group" aria-label="Filter courses by topic">
+                <button type="button" class="course-filter px-4 py-2 border border-neonGreen bg-neonGreen text-black font-mono text-sm" data-category="all" aria-pressed="true">All courses</button>
+                <button type="button" class="course-filter px-4 py-2 border border-gray-700 text-gray-300 font-mono text-sm hover:border-neonGreen" data-category="beginner" aria-pressed="false">Beginner</button>
+                <button type="button" class="course-filter px-4 py-2 border border-gray-700 text-gray-300 font-mono text-sm hover:border-neonGreen" data-category="strategy" aria-pressed="false">Strategy</button>
+                <button type="button" class="course-filter px-4 py-2 border border-gray-700 text-gray-300 font-mono text-sm hover:border-neonGreen" data-category="risk" aria-pressed="false">Risk</button>
+                <button type="button" class="course-filter px-4 py-2 border border-gray-700 text-gray-300 font-mono text-sm hover:border-neonGreen" data-category="mentorship" aria-pressed="false">Mentorship</button>
+            </div>
+            <p id="course-count" class="text-sm text-gray-500 font-mono" aria-live="polite"></p>
+        </div>
+
+        <div id="course-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Module 01 -->
-            <div class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
+            <div data-course-card data-course-category="beginner" class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
                 <div>
                     <div class="h-48 bg-darkBg border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80" alt="Beginner Forex Course" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
@@ -894,12 +1101,12 @@
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Beginner%20Forex%20Course." target="_blank" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
+                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Beginner%20Forex%20Course." target="_blank" rel="noopener noreferrer" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
                 </div>
             </div>
 
             <!-- Module 02 -->
-            <div class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
+            <div data-course-card data-course-category="strategy" class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
                 <div>
                     <div class="h-48 bg-darkBg border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?auto=format&fit=crop&w=600&q=80" alt="Advanced Forex Strategy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
@@ -911,12 +1118,12 @@
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Advanced%20Forex%20Strategy%20Course." target="_blank" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
+                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Advanced%20Forex%20Strategy%20Course." target="_blank" rel="noopener noreferrer" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
                 </div>
             </div>
 
             <!-- Module 03 -->
-            <div class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
+            <div data-course-card data-course-category="strategy" class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
                 <div>
                     <div class="h-48 bg-darkBg border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="Price Action Mastery" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
@@ -928,12 +1135,12 @@
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Price%20Action%20Mastery%20Course." target="_blank" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
+                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Price%20Action%20Mastery%20Course." target="_blank" rel="noopener noreferrer" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
                 </div>
             </div>
 
             <!-- Module 04 -->
-            <div class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
+            <div data-course-card data-course-category="risk" class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
                 <div>
                     <div class="h-48 bg-darkBg border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Risk Management" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
@@ -945,12 +1152,12 @@
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Risk%20Management%20Course." target="_blank" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
+                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%20Risk%20Management%20Course." target="_blank" rel="noopener noreferrer" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
                 </div>
             </div>
 
             <!-- Module 05 -->
-            <div class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
+            <div data-course-card data-course-category="mentorship" class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
                 <div>
                     <div class="h-48 bg-darkBg border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Live Trading Sessions" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
@@ -962,12 +1169,12 @@
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20get%20access%20to%20Live%20Trading%20Sessions." target="_blank" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
+                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20get%20access%20to%20Live%20Trading%20Sessions." target="_blank" rel="noopener noreferrer" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
                 </div>
             </div>
 
             <!-- Module 06 -->
-            <div class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
+            <div data-course-card data-course-category="mentorship" class="bg-darkCard border border-gray-800 rounded-none overflow-hidden flex flex-col justify-between group hover:border-neonGreen transition-colors cyber-border interactive-cursor">
                 <div>
                     <div class="h-48 bg-darkBg border-b border-gray-800 relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80" alt="1-on-1 Private Mentorship" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80">
@@ -979,7 +1186,7 @@
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%201-on-1%20Private%20Mentorship%20Course." target="_blank" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
+                    <a href="https://wa.me/923293279907?text=Hi!%20I%20want%20to%20enroll%20in%20the%201-on-1%20Private%20Mentorship%20Course." target="_blank" rel="noopener noreferrer" class="w-full inline-block text-center py-3 border border-gray-800 bg-darkBg hover:bg-neonGreen hover:text-black hover:border-neonGreen text-white font-display font-semibold rounded-none transition-all duration-300 clip-path-slant interactive-cursor"> Enroll Course </a>
                 </div>
             </div>
         </div>
@@ -1078,41 +1285,70 @@
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-darkCard border border-gray-800 p-8 shadow-xl cyber-border">
                 <div class="text-center mb-8">
-                    <h2 class="text-3xl font-display font-extrabold text-white mb-2">Risk Calculator</h2>
-                    <p class="text-gray-400 font-mono text-sm">Calculate your position size instantly based on your risk percentage.</p>
+                    <h2 class="text-3xl font-display font-extrabold text-white mb-2">Position Size Calculator</h2>
+                    <p class="text-gray-400 font-mono text-sm">Estimate a position size from your account risk, stop loss, and broker pip value.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="space-y-2">
-                        <label class="text-neonGreen font-mono text-sm">Account Balance ($)</label>
-                        <input type="number" id="calc-balance" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor" placeholder="1000">
+                        <label for="calc-balance" class="text-neonGreen font-mono text-sm">Account balance</label>
+                        <input type="number" id="calc-balance" min="0.01" step="any" value="1000" required inputmode="decimal" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-neonGreen font-mono text-sm">Risk (%)</label>
-                        <input type="number" id="calc-risk" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor" placeholder="1 or 2">
+                        <label for="calc-currency" class="text-neonGreen font-mono text-sm">Account currency</label>
+                        <select id="calc-currency" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor">
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="GBP">GBP</option>
+                            <option value="PKR">PKR</option>
+                        </select>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-neonGreen font-mono text-sm">Stop Loss (Pips)</label>
-                        <input type="number" id="calc-sl" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor" placeholder="20">
+                        <label for="calc-risk" class="text-neonGreen font-mono text-sm">Risk per trade (%)</label>
+                        <input type="number" id="calc-risk" min="0.01" max="100" step="any" value="1" required inputmode="decimal" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-neonGreen font-mono text-sm">Pair (Optional)</label>
-                        <select id="calc-pair" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor">
-                            <option value="10">Standard (10 USD/pip)</option>
-                            <option value="1">Mini (1 USD/pip)</option>
-                            <option value="0.1">Micro (0.10 USD/pip)</option>
+                        <label for="calc-sl" class="text-neonGreen font-mono text-sm">Stop loss (pips)</label>
+                        <input type="number" id="calc-sl" min="0.01" step="any" value="20" required inputmode="decimal" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="calc-pip-value" class="text-neonGreen font-mono text-sm">Pip value for 1.00 lot (<span id="calc-currency-label">USD</span>)</label>
+                        <input type="number" id="calc-pip-value" min="0.000001" step="any" value="10" required inputmode="decimal" aria-describedby="pip-value-help" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor">
+                        <p id="pip-value-help" class="text-gray-500 text-xs font-mono">Enter the value shown by your broker for this instrument, in your account currency.</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label for="calc-lot-step" class="text-neonGreen font-mono text-sm">Broker lot increment</label>
+                        <select id="calc-lot-step" class="w-full bg-darkBg border border-gray-700 text-white p-3 rounded-none focus:border-neonGreen focus:outline-none font-mono interactive-cursor">
+                            <option value="0.01">0.01 lot</option>
+                            <option value="0.001">0.001 lot</option>
+                            <option value="0.1">0.1 lot</option>
                         </select>
                     </div>
                 </div>
 
-                <button onclick="calculateRisk()" class="w-full py-3 bg-neonGreen text-black font-display font-bold hover:bg-white transition-colors rounded-none clip-path-slant interactive-cursor">
+                <button id="calculate-position" type="button" class="w-full py-3 bg-neonGreen text-black font-display font-bold hover:bg-white transition-colors rounded-none clip-path-slant interactive-cursor">
                     CALCULATE POSITION
                 </button>
+                <p id="calc-error" class="hidden mb-4 text-neonRed font-mono text-sm" role="alert"></p>
 
-                <div id="calc-result" class="mt-6 p-4 bg-darkBg border border-gray-800 hidden text-center">
-                    <p class="text-gray-400 font-mono text-sm mb-1">Recommended Lot Size:</p>
-                    <h3 class="text-2xl font-display font-bold text-neonGreen" id="result-value">0.00 Lots</h3>
+                <div id="calc-result" class="mt-6 p-5 bg-darkBg border border-gray-800 hidden" aria-live="polite">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                        <div>
+                            <p class="text-gray-400 font-mono text-sm mb-1">Estimated position size</p>
+                            <h3 class="text-2xl font-display font-bold text-neonGreen" id="result-value">0.00 lots</h3>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 font-mono text-sm mb-1">Risk budget</p>
+                            <h3 class="text-xl font-display font-bold text-white" id="risk-budget">$0.00</h3>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 font-mono text-sm mb-1">Estimated risk at this size</p>
+                            <h3 class="text-xl font-display font-bold text-white" id="risk-amount">$0.00</h3>
+                        </div>
+                    </div>
+                    <p id="calc-result-note" class="mt-4 text-gray-500 text-xs font-mono text-center" aria-live="polite"></p>
                 </div>
+                <p class="mt-4 text-gray-500 font-mono text-xs leading-relaxed">Educational estimate only, not financial advice. Pip values and contract sizes vary by instrument and broker; verify the specifications before placing an order. Trading can result in losses.</p>
             </div>
         </div>
     </section>
@@ -1199,7 +1435,7 @@
 
                 <!-- Connect with CEO Button -->
                 <div class="mb-5">
-                    <a href="https://wa.me/923293279907?text=Hi%20Arslan,%20I%20would%20like%20to%20connect." target="_blank" 
+                    <a href="https://wa.me/923293279907?text=Hi%20Arslan,%20I%20would%20like%20to%20connect." target="_blank" rel="noopener noreferrer"
                        class="inline-flex items-center gap-3 px-8 py-3.5 bg-transparent border border-neonGreen text-neonGreen font-display font-bold hover:bg-neonGreen hover:text-black hover:shadow-neon transition-all clip-path-slant interactive-cursor">
                        <i class="fa-brands fa-whatsapp text-xl"></i>
                        <span>Connect with CEO</span>
@@ -1318,7 +1554,7 @@
                     <!-- ACTION BUTTONS -->
                     <div class="px-4 pb-3 flex items-center gap-2.5">
                         <a href="https://wa.me/923190165137?text=Prime%20Forex%20Academy%2C%20I%E2%80%99m%20interested%20in%20learning%20Forex%20trading.%20Could%20you%20guide%20me%3F" 
-                           target="_blank"
+                           target="_blank" rel="noopener noreferrer"
                            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-neonGreen/10 border border-neonGreen text-neonGreen font-mono text-[10px] font-bold uppercase tracking-wider hover:bg-neonGreen hover:text-black hover:shadow-neon transition-all duration-300 interactive-cursor">
                             <i class="fa-brands fa-whatsapp text-sm"></i>
                             <span>Connect With Hira</span>
@@ -1346,37 +1582,37 @@
             <div class="space-y-4">
                 <!-- Question 1 -->
                 <div class="border border-gray-800 rounded-none bg-darkCard overflow-hidden cyber-border faq-item interactive-cursor">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none" aria-expanded="false" aria-controls="faq-answer-1">
                         <span class="font-mono text-gray-200 text-lg">Is $100 enough to start forex?</span>
                         <i class="fa-solid fa-chevron-down text-neonGreen transition-transform duration-300"></i>
                     </button>
-                    <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
+                    <div id="faq-answer-1" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
                         <p class="pb-4 text-gray-400 font-mono text-sm leading-relaxed">
-                            Yes, with $100 you can start trading forex, especially with brokers that offer cent accounts or micro-lots (0.01 lot size). However, risk management is crucial as a $100 account has very low margin for error. It is recommended to treat it as a learning account rather than a primary income source.
+                            There is no universally safe amount to start with. Minimum deposits, contract sizes, and rules vary by broker and country, and a small account can still lose money quickly. Learn on a demo account first, check local regulations, and never risk money needed for essentials.
                         </p>
                     </div>
                 </div>
 
                 <!-- Question 2 -->
                 <div class="border border-gray-800 rounded-none bg-darkCard overflow-hidden cyber-border faq-item interactive-cursor">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none" aria-expanded="false" aria-controls="faq-answer-2">
                         <span class="font-mono text-gray-200 text-lg">How much can a beginner make?</span>
                         <i class="fa-solid fa-chevron-down text-neonGreen transition-transform duration-300"></i>
                     </button>
-                    <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
+                    <div id="faq-answer-2" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
                         <p class="pb-4 text-gray-400 font-mono text-sm leading-relaxed">
-                            There is no fixed limit, but realistic beginners should aim for 1-5% monthly returns initially. Many beginners lose money due to lack of discipline. Focus on consistency and preserving capital rather than high profits in the first 6 months.
+                            Forex has no dependable fixed income or guaranteed return, and losses are possible. Be cautious of promised percentages or guaranteed profits. Prioritize education, practise on a demo account, and only consider risking money you can afford to lose.
                         </p>
                     </div>
                 </div>
 
                 <!-- Question 3 -->
                 <div class="border border-gray-800 rounded-none bg-darkCard overflow-hidden cyber-border faq-item interactive-cursor">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none" aria-expanded="false" aria-controls="faq-answer-3">
                         <span class="font-mono text-gray-200 text-lg">Is Forex trading Halal or Haram?</span>
                         <i class="fa-solid fa-chevron-down text-neonGreen transition-transform duration-300"></i>
                     </button>
-                    <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
+                    <div id="faq-answer-3" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
                         <p class="pb-4 text-gray-400 font-mono text-sm leading-relaxed">
                             This depends on the interpretation. Some scholars consider it Halal if there is no interest (Riba) involved (Swap-free accounts) and trades are executed instantly. Others disagree due to speculation. It is best to consult your local religious scholar.
                         </p>
@@ -1385,11 +1621,11 @@
 
                 <!-- Question 4 -->
                 <div class="border border-gray-800 rounded-none bg-darkCard overflow-hidden cyber-border faq-item interactive-cursor">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center faq-question focus:outline-none" aria-expanded="false" aria-controls="faq-answer-4">
                         <span class="font-mono text-gray-200 text-lg">What is a Pip?</span>
                         <i class="fa-solid fa-chevron-down text-neonGreen transition-transform duration-300"></i>
                     </button>
-                    <div class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
+                    <div id="faq-answer-4" class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out faq-answer px-6">
                         <p class="pb-4 text-gray-400 font-mono text-sm leading-relaxed">
                             A "Pip" (Percentage in Point) is usually the smallest price move that a given exchange rate can make. For most currency pairs, a Pip is the 4th decimal place (0.0001). For pairs involving the Japanese Yen, it is the 2nd decimal place (0.01).
                         </p>
@@ -1416,7 +1652,7 @@
                     <a href="https://www.instagram.com/behtreen_trader?stkn=MXE2ZHhkbHRsYjIxaw==" class="text-gray-600 hover:text-neonGreen interactive-cursor"><i class="fa-brands fa-instagram"></i></a>
                     <a href="https://www.facebook.com/share/18PF5ttcdv/" class="text-gray-600 hover:text-neonGreen interactive-cursor"><i class="fa-brands fa-facebook"></i></a>
                     <a href="https://www.youtube.com/@primeForexAcademy-c6p" class="text-gray-600 hover:text-neonGreen interactive-cursor"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="tiktok.com/@cookiee_store10106" class="text-gray-600 hover:text-neonGreen interactive-cursor"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.tiktok.com/@cookiee_store10106" class="text-gray-600 hover:text-neonGreen interactive-cursor" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
                 </div>
                 <div>
@@ -1439,46 +1675,91 @@
                 <div>
                     <h4 class="font-display font-bold text-white mb-4">Contact</h4>
                     <ul class="space-y-2 text-sm text-gray-400 font-mono">
-                        <li class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-neonGreen"></i> +92 329 3279907</li>
-                        <li class="flex items-center gap-2"><i class="fa-regular fa-envelope text-neonGreen"></i> support@primeforex.com</li>
+                        <li class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-neonGreen"></i><a href="https://wa.me/923293279907" class="hover:text-neonGreen">+92 329 3279907</a></li>
+                        <li class="flex items-center gap-2"><i class="fa-regular fa-envelope text-neonGreen"></i><a href="mailto:primeforexacademy@gmail.com" class="hover:text-neonGreen">primeforexacademy@gmail.com</a></li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
                 <p class="text-gray-600 text-xs font-mono text-center md:text-left">
-                    &copy; 2023 Prime Forex Academy. All rights reserved.
+                    &copy; <span id="current-year"></span> Prime Forex Academy. All rights reserved.
                 </p>
              
         </div>
     </footer>
 
+    <script src="./forex-knowledge.js"></script>
+    <script src="./daily-conversations.js"></script>
     <script>
         // --- FAQ Accordion Logic ---
         const faqQuestions = document.querySelectorAll('.faq-question');
-        
+
         faqQuestions.forEach(question => {
             question.addEventListener('click', () => {
                 const answer = question.nextElementSibling;
                 const icon = question.querySelector('i');
-                
-                // Close others (optional - remove if you want multiple open)
+
                 faqQuestions.forEach(q => {
-                    if(q !== question) {
+                    if (q !== question) {
                         q.nextElementSibling.style.maxHeight = null;
-                        q.querySelector('i').style.transform = "rotate(0deg)";
+                        q.setAttribute('aria-expanded', 'false');
+                        q.querySelector('i').style.transform = 'rotate(0deg)';
                     }
                 });
 
-                // Toggle current
-                if (answer.style.maxHeight) {
+                const isOpen = question.getAttribute('aria-expanded') === 'true';
+                question.setAttribute('aria-expanded', String(!isOpen));
+                if (isOpen) {
                     answer.style.maxHeight = null;
-                    icon.style.transform = "rotate(0deg)";
+                    icon.style.transform = 'rotate(0deg)';
                 } else {
                     answer.style.maxHeight = answer.scrollHeight + "px";
-                    icon.style.transform = "rotate(180deg)";
+                    icon.style.transform = 'rotate(180deg)';
                 }
             });
         });
+
+        // --- Course search and topic filters ---
+        const courseCards = Array.from(document.querySelectorAll('[data-course-card]'));
+        const courseSearch = document.getElementById('course-search');
+        const courseCount = document.getElementById('course-count');
+        const courseFilters = document.querySelectorAll('.course-filter');
+        let selectedCourseCategory = 'all';
+
+        function updateCourses() {
+            const query = courseSearch.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            courseCards.forEach(card => {
+                const matchesCategory = selectedCourseCategory === 'all' ||
+                    card.dataset.courseCategory === selectedCourseCategory;
+                const matchesSearch = card.textContent.toLowerCase().includes(query);
+                const isVisible = matchesCategory && matchesSearch;
+                card.hidden = !isVisible;
+                card.style.display = isVisible ? '' : 'none';
+                if (isVisible) visibleCount += 1;
+            });
+
+            courseCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'course' : 'courses'} shown`;
+        }
+
+        courseFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                selectedCourseCategory = filter.dataset.category;
+                courseFilters.forEach(button => {
+                    const isSelected = button === filter;
+                    button.setAttribute('aria-pressed', String(isSelected));
+                    button.classList.toggle('bg-neonGreen', isSelected);
+                    button.classList.toggle('text-black', isSelected);
+                    button.classList.toggle('border-neonGreen', isSelected);
+                    button.classList.toggle('text-gray-300', !isSelected);
+                    button.classList.toggle('border-gray-700', !isSelected);
+                });
+                updateCourses();
+            });
+        });
+        courseSearch.addEventListener('input', updateCourses);
+        updateCourses();
 
         // --- Counter Animation ---
         const counters = document.querySelectorAll('.counter');
@@ -1486,8 +1767,12 @@
 
         const animateCounters = () => {
             counters.forEach(counter => {
+                const target = Number(counter.getAttribute('data-target'));
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    counter.textContent = target.toLocaleString();
+                    return;
+                }
                 const updateCount = () => {
-                    const target = +counter.getAttribute('data-target');
                     const count = +counter.innerText;
                     const inc = target / speed;
 
@@ -1504,7 +1789,7 @@
 
         // Trigger counter animation when scrolled into view
         let counted = false;
-        const observer = new IntersectionObserver((entries) => {
+        const observer = window.IntersectionObserver && new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting && !counted) {
                 animateCounters();
                 counted = true;
@@ -1512,28 +1797,69 @@
         });
         
         const counterSection = document.querySelector('.counter');
-        if(counterSection) {
+        if(counterSection && observer) {
             observer.observe(counterSection.parentElement.parentElement);
         }
 
-        // --- Calculator Logic ---
-        function calculateRisk() {
-            const balance = parseFloat(document.getElementById('calc-balance').value);
-            const risk = parseFloat(document.getElementById('calc-risk').value);
-            const sl = parseFloat(document.getElementById('calc-sl').value);
-            const pairVal = parseFloat(document.getElementById('calc-pair').value);
+        // --- Position size calculator ---
+        const calculatorInputs = [
+            document.getElementById('calc-balance'),
+            document.getElementById('calc-risk'),
+            document.getElementById('calc-sl'),
+            document.getElementById('calc-pip-value')
+        ];
+        const calculatorCurrency = document.getElementById('calc-currency');
+        const calculatorError = document.getElementById('calc-error');
+        const calculatorResult = document.getElementById('calc-result');
 
-            if (isNaN(balance) || isNaN(risk) || isNaN(sl)) {
-                alert("Please enter valid numbers");
+        function calculateRisk() {
+            const [balanceInput, riskInput, stopLossInput, pipValueInput] = calculatorInputs;
+            const balance = balanceInput.valueAsNumber;
+            const risk = riskInput.valueAsNumber;
+            const stopLoss = stopLossInput.valueAsNumber;
+            const pipValue = pipValueInput.valueAsNumber;
+            const lotStep = Number(document.getElementById('calc-lot-step').value);
+
+            calculatorError.classList.add('hidden');
+            calculatorResult.classList.add('hidden');
+
+            const invalidInput = calculatorInputs.find(input => !input.value || !input.validity.valid || !Number.isFinite(input.valueAsNumber));
+            if (invalidInput || risk > 100) {
+                calculatorError.textContent = risk > 100
+                    ? 'Risk must be greater than 0% and no more than 100%.'
+                    : 'Enter a valid positive value in each field to calculate your position.';
+                calculatorError.classList.remove('hidden');
+                (invalidInput || riskInput).focus();
                 return;
             }
 
             const riskAmount = balance * (risk / 100);
-            const lotSize = riskAmount / (sl * pairVal);
+            const theoreticalLots = riskAmount / (stopLoss * pipValue);
+            const lotSize = Math.floor((theoreticalLots + Number.EPSILON) / lotStep) * lotStep;
+            const actualRisk = lotSize * stopLoss * pipValue;
+            const currencyFormatter = new Intl.NumberFormat(undefined, {
+                style: 'currency',
+                currency: calculatorCurrency.value,
+                maximumFractionDigits: 2
+            });
 
-            document.getElementById('result-value').innerText = lotSize.toFixed(2) + " Lots";
-            document.getElementById('calc-result').classList.remove('hidden');
+            document.getElementById('result-value').textContent = `${lotSize.toFixed(3)} lots`;
+            document.getElementById('risk-amount').textContent = currencyFormatter.format(actualRisk);
+            document.getElementById('risk-budget').textContent = currencyFormatter.format(riskAmount);
+            document.getElementById('calc-result-note').textContent = lotSize === 0
+                ? `Your risk budget is below the selected minimum lot increment (${lotStep} lot). Check your broker's minimum size or choose a smaller increment.`
+                : 'Size is rounded down to your selected lot increment; actual execution and risk may differ.';
+            calculatorResult.classList.remove('hidden');
         }
+
+        document.getElementById('calculate-position').addEventListener('click', calculateRisk);
+        calculatorInputs.forEach(input => input.addEventListener('input', calculateRisk));
+        document.getElementById('calc-lot-step').addEventListener('change', calculateRisk);
+        calculatorCurrency.addEventListener('change', () => {
+            document.getElementById('calc-currency-label').textContent = calculatorCurrency.value;
+            calculateRisk();
+        });
+        calculateRisk();
 
         const aiChatbot = document.getElementById('aiChatbot');
         const chatMessages = document.getElementById('chatMessages');
@@ -1558,12 +1884,13 @@
             indicator.className = 'chat-message bot chat-typing';
             indicator.setAttribute('role', 'status');
             indicator.setAttribute('aria-label', 'Prime Ai is typing');
+
             const label = document.createElement('span');
             label.className = 'chat-typing-label';
             label.textContent = 'Prime Ai is typing';
             indicator.appendChild(label);
 
-            for (let i = 0; i < 3; i += 1) {
+            for (let index = 0; index < 3; index += 1) {
                 const dot = document.createElement('span');
                 dot.setAttribute('aria-hidden', 'true');
                 indicator.appendChild(dot);
@@ -1574,15 +1901,210 @@
             return indicator;
         }
 
-        function getTradingReply(question) {
-            const q = question.toLowerCase().replace(/[^\w\s.%$/-]/g, ' ').replace(/\s+/g, ' ').trim();
-            const romanUrdu = /\b(kya|kia|kaise|kaisay|kaisa|kaisi|kitna|kitni|kitne|kyun|mujhe|aap|ap|mera|meri|mere|batao|btao|samjhao|samjha|hai|hain|ho|hota|hoti|hote|hoga|hogi|honge|karun|karo|krun|kron|karna|krna|karta|krta|nahi|nai|nahin|mein|ko|aur|sawal|jawab|chahiye|bata|bta|kese|kesy|kahan|kab|ky|kal|mausam|shuru|shuruaat|kitni|kitne|chahte|chahta|chahti|krna|karna|rakhna|nikalna|bana|banao|kaam|bari|bara|chota|choti|paisa|paise|nuksan|faida|seekhna|seekh|samajh|muje|apko|mujh|kr|kro|k|q)\b/.test(q);
-            const reply = (english, roman) => romanUrdu ? roman : english;
+        const knowledgeStopWords = new Set([
+            'a', 'an', 'and', 'are', 'as', 'at', 'be', 'can', 'does', 'for', 'from', 'how',
+            'in', 'is', 'it', 'of', 'on', 'or', 'the', 'to', 'what',
+            'when', 'where', 'which', 'who', 'why', 'with', 'would', 'explain', 'define',
+            'tell', 'me', 'please', 'meaning', 'mean', 'called', 'about',
+            'kya', 'kia', 'hai', 'hain', 'hota', 'hoti', 'hote', 'ka', 'ki', 'ke',
+            'ko', 'mein', 'me', 'aur', 'aik', 'ek', 'kisi', 'kise', 'kahan', 'kab'
+        ]);
+        const knowledgeAliases = new Map([
+            ['xauusd', 'xauusd'], ['gold', 'gold'], ['currencies', 'currency'],
+            ['pairs', 'pair'], ['candles', 'candle'], ['indicators', 'indicator'],
+            ['profits', 'profit'], ['prices', 'price'], ['affects', 'affect'],
+            ['sessions', 'session'], ['orders', 'order'], ['zones', 'zone'],
+            ['concepts', 'concept'], ['patterns', 'pattern'], ['bands', 'band'],
+            ['traders', 'trader'], ['trades', 'trade']
+        ]);
+        const primeKnowledgeEntries = [
+            ...(Array.isArray(window.primeForexKnowledge) ? window.primeForexKnowledge : []),
+            ...(Array.isArray(window.primeDailyKnowledge) ? window.primeDailyKnowledge : [])
+        ];
 
-            if (/^(hi|hello|hey|salam|assalam|assalamu alaikum|aoa)[!. ]*$/.test(q)) {
+        function normalizeKnowledgeQuestion(value) {
+            return value.toLowerCase()
+                .replace(/xau\s*\/?\s*usd/g, ' xauusd ')
+                .replace(/[^a-z0-9\s]/g, ' ')
+                .split(/\s+/)
+                .filter(Boolean)
+                .map(token => {
+                    if (knowledgeAliases.has(token)) return knowledgeAliases.get(token);
+                    if (token.endsWith('ies') && token.length > 4) return `${token.slice(0, -3)}y`;
+                    if (token.endsWith('s') && token.length > 3) return token.slice(0, -1);
+                    return token;
+                })
+                .filter(token => !knowledgeStopWords.has(token));
+        }
+
+        function findCuratedForexAnswer(question, romanUrdu) {
+            const exactQuestion = question.toLowerCase()
+                .replace(/['’]/g, '')
+                .replace(/[^a-z0-9\s]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+            for (let index = primeKnowledgeEntries.length - 1; index >= 0; index -= 1) {
+                const entry = primeKnowledgeEntries[index];
+                const entryQuestion = entry.question.toLowerCase()
+                    .replace(/['’]/g, '')
+                    .replace(/[^a-z0-9\s]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                if (entryQuestion === exactQuestion) {
+                    return romanUrdu ? entry.romanUrdu : entry.english;
+                }
+            }
+
+            const queryTokens = normalizeKnowledgeQuestion(question);
+            if (!queryTokens.length || !primeKnowledgeEntries.length) return null;
+
+            const querySet = new Set(queryTokens);
+            if (querySet.size === 1) {
+                const [term] = querySet;
+                const matches = primeKnowledgeEntries.filter(entry =>
+                    normalizeKnowledgeQuestion(entry.question).includes(term)
+                );
+                if (matches.length === 1) {
+                    return romanUrdu ? matches[0].romanUrdu : matches[0].english;
+                }
+                const exactMatches = matches.filter(entry =>
+                    normalizeKnowledgeQuestion(entry.question).length === 1
+                );
+                if (exactMatches.length === 1) {
+                    return romanUrdu ? exactMatches[0].romanUrdu : exactMatches[0].english;
+                }
+                return null;
+            }
+
+            let bestMatch = null;
+            let bestScore = 0;
+            for (const entry of primeKnowledgeEntries) {
+                const entryTokens = normalizeKnowledgeQuestion(entry.question);
+                const entrySet = new Set(entryTokens);
+                const sharedCount = [...querySet].filter(token => entrySet.has(token)).length;
+                const queryCoverage = sharedCount / querySet.size;
+                if (queryCoverage < 0.75) continue;
+
+                const entryCoverage = sharedCount / entrySet.size;
+                const score = queryCoverage * 0.8 + entryCoverage * 0.2;
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMatch = entry;
+                }
+            }
+
+            if (!bestMatch || bestScore < 0.55) return null;
+            return romanUrdu ? bestMatch.romanUrdu : bestMatch.english;
+        }
+
+        function getTradingReply(question) {
+            const q = question.toLowerCase().replace(/['’]/g, '').replace(/[^\p{L}\p{N}\s.%$/-]/gu, ' ').replace(/\s+/g, ' ').trim();
+            if (/^(acha|achha|accha|achaa|acha ji|achha ji|accha ji)$/.test(q)) {
+                return 'G bilkul.';
+            }
+            if (/^(ok|okay|okey|ok thanks|okay thanks|ok thank you|okay thank you)$/.test(q)) {
+                return '😊 Glad to help!';
+            }
+            const romanUrdu = /\b(kya|kia|kaise|kaisay|kaisa|kesa|kaisi|kitna|kitni|kitne|kyun|mujhe|mujhy|aap|ap|apke|apka|apki|mera|meri|mere|batao|btao|samjhao|samjha|hai|hain|ho|h|hn|hota|hoti|hote|hoga|hogi|honge|karun|karo|krun|kron|karna|karni|krna|karta|krta|nahi|nai|nahin|mein|ko|ka|ki|ke|aur|sawal|jawab|chahiye|bata|bta|do|de|dedo|mangy|mangna|manga|mang|kese|kesy|kon|kaun|kahan|kab|ky|kisne|mausam|shuru|shuruaat|chahte|chahta|chahti|rakhna|nikalna|bana|banaya|banao|kaam|bari|bara|chota|choti|paisa|paise|nuksan|faida|seekhna|seekh|samajh|muje|mujh|kr|kro|aray|arey|wapas|gaye|gaya|gayi|rahi|raha|rahe|abhi|aaj|btao|bta|tum|tumhara|insaan|bore|dost|hote|suno|sunao|guftagu|khairiyat|bhai|yaar|allah|hafiz|walaikum|alaikum)\b/.test(q) ||
+                /\b(?:number|num)\s+(?:do|de|dedo|btao|batao)\b|\b(?:do|de|dedo)\s+(?:mujhe|mera|meri)?\s*(?:number|num)\b/.test(q);
+            const casualTone = /\b(bhai|yaar|bro)\b/.test(q);
+            const reply = (english, roman) => {
+                if (!romanUrdu) return english;
+                if (!casualTone || /^(bhai|yaar),|^(haha|hahaha|wah|zabardast|bilkul|koi baat|assalam|alhamdulillah)\b/i.test(roman)) return roman;
+                return `Bhai, ${roman}`;
+            };
+
+            if (/\bgiggi\b/.test(q) && /\b(who|what|kon|kaun|hai|ha|is)\b/.test(q)) {
+                return romanUrdu ? 'Giggi lushi insan hai.' : 'Giggi is a Lushi person.';
+            }
+            if (/^babby[!. ]*$/.test(q)) {
+                return 'G kro Abba ko';
+            }
+
+            const asksEmail = /\b(email|e-mail|gmail|mail)\b/.test(q);
+            const asksWhatsApp = /\b(whatsapp|whats app|message)\b/.test(q);
+            const asksPhone = /\b(phone|mobile|call|telephone)\b/.test(q) ||
+                (!asksWhatsApp && /\b(number|num)\b/.test(q));
+            const mentionsTradingNumber = /\b(pips?|lots?|orders?|trades?|positions?|accounts?|decimal|candles?|currenc(?:y|ies)|risks?|indicators?)\b/.test(q);
+            const asksForContact = asksEmail || asksWhatsApp || asksPhone ||
+                /\b(contact|rabta|raabta)\b/.test(q);
+            if (asksForContact && !mentionsTradingNumber) {
+                const requestedContacts = [];
+                if (asksPhone) requestedContacts.push(romanUrdu
+                    ? 'Ye raha Arslan sir ka number: 03243127374'
+                    : 'Arslan Sir’s phone number: 03243127374');
+                if (asksWhatsApp) requestedContacts.push(romanUrdu
+                    ? 'Arslan sir ka WhatsApp number: +92 329 3279907'
+                    : 'Arslan Sir’s WhatsApp number: +92 329 3279907');
+                if (asksEmail) requestedContacts.push(romanUrdu
+                    ? 'Prime Forex Academy ka Gmail: primeforexacademy@gmail.com'
+                    : 'Prime Forex Academy email: primeforexacademy@gmail.com');
+                if (!requestedContacts.length) requestedContacts.push(romanUrdu
+                    ? 'Arslan sir se WhatsApp par rabta karein: +92 329 3279907'
+                    : 'Contact Arslan Sir on WhatsApp: +92 329 3279907');
+                return requestedContacts.join('\n');
+            }
+
+            if (/\b(abhi\s*(to\s*)?raat|raat\s+ho\s+rahi|it('?s| is)\s+(already\s+)?night|but\s+it('?s| is)\s+night)\b/.test(q)) {
+                return romanUrdu
+                    ? 'Hahaha! Oops, meri ghalti bhai! 😅 Ji ji bhai bilkul, Allah Hafiz bhai! Aapki raat achi aur araam se guzre. Apna khayal rakhna! ❤️'
+                    : 'Hahaha! Oops, my mistake! 😅 You’re right, it is night already. Have a peaceful and restful night. Take care! ❤️';
+            }
+            if (/\b(just kidding|kidding|only joking|just joking|mazak|mazaq)\b/.test(q)) {
+                return reply(
+                    'Haha, good one! 😄 What else is on your mind?',
+                    'Haha, acha mazak tha! 😄 Aur sunao, kya chal raha hai?'
+                );
+            }
+            if (/^(allah hafiz prime bhai|bye prime ai see you tomorrow)[!. ]*$/.test(q)) {
+                const isNight = new Date().getHours() >= 18 || new Date().getHours() < 6;
+                if (romanUrdu) {
+                    return isNight
+                        ? 'Allah Hafiz bhai! Kal phir baat hogi. Aapki raat achi guzre, apna khayal rakhna!'
+                        : 'Allah Hafiz bhai! Kal phir baat hogi. Aapka din acha guzre, apna khayal rakhna!';
+                }
+                return isNight
+                    ? 'Good night! See you tomorrow. Have a peaceful night and take care!'
+                    : 'Goodbye! See you tomorrow. Have a lovely day and take care!';
+            }
+            if (/\b(bhai|yaar|bro)\b/.test(q) &&
+                /\b(you said|i said|actually|but|lekin|magar|galat|wrong|abhi)\b/.test(q)) {
+                return reply(
+                    'Haha, you’re right! 😄 Thanks for correcting me.',
+                    'Haha, sahi kaha bhai! 😄 Meri correction karne ka shukriya.'
+                );
+            }
+
+            const curatedAnswer = findCuratedForexAnswer(question, romanUrdu);
+            if (curatedAnswer) return curatedAnswer;
+
+            if (/^(hi|hello|hey|salam|assalam|assalamualaikum|assalamu alaikum|aoa|good morning|good afternoon|good evening)( bhai| yaar| bro)?[!. ]*$/.test(q)) {
                 return reply(
                     'Hello! I can explain Forex concepts, risk management, lot sizing, and academy courses. Ask me a specific trading question.',
                     'Assalam-o-Alaikum! Main Forex ke concepts, risk management, lot size aur academy courses samjha sakta hoon. Apna specific sawal poochhein.'
+                );
+            }
+            if (/\b(phone|mobile|contact|whatsapp|whats app|message|rabta|raabta|num)\b/.test(q) ||
+                (/\bcall\b/.test(q) && /\b(arslan|ceo|founder|owner|him|her|you)\b/.test(q)) ||
+                (/\bnumber\b/.test(q) && (
+                    /\b(arslan|ceo|founder|owner|mera|meri|my|your|his|her)\b/.test(q) ||
+                    !/\b(pips?|lots?|orders?|trades?|positions?|accounts?|decimal|candles?|currenc(?:y|ies)|risks?|indicators?)\b/.test(q)
+                ))) {
+                return reply(
+                    'You can contact Arslan, CEO and founder of Prime Forex Academy, on WhatsApp at +92 329 3279907: https://wa.me/923293279907',
+                    'Arslan, Prime Forex Academy ke CEO aur founder, se WhatsApp par +92 329 3279907 par rabta karein: https://wa.me/923293279907'
+                );
+            }
+            if (/(arslan|ceo|founder|owner|academy.*team|team.*academy)/.test(q)) {
+                return reply(
+                    'According to the website, Arslan is the founder and CEO of Prime Forex Academy. The site describes his focus as Forex pairs and market liquidity, and says he has 7+ years of market experience.',
+                    'Website ke mutabiq Arslan, Prime Forex Academy ke founder aur CEO hain. Website par unka focus Forex pairs aur market liquidity bataya gaya hai, aur 7+ saal ka market experience diya gaya hai.'
+                );
+            }
+            if (/(who are you|what are you|your name|tum kon|aap kon|ap kon|kon ho)/.test(q)) {
+                return reply(
+                    'I am Prime AI, the academy’s website assistant. I can explain general Forex concepts and the information published on this website, but I do not have live market data or provide financial advice.',
+                    'Main Prime AI hoon, academy ki website assistant. Main Forex ke aam concepts aur website par di hui maloomat samjha sakta hoon, lekin mere paas live market data nahi aur main financial advice nahi deta.'
                 );
             }
             if (/(student|school|college|university|taleem|parhai|parh raha|parh rahi|study)/.test(q) &&
@@ -1592,10 +2114,10 @@
                     'Aap parhai ke saath trading seekh sakte hain, lekin ise taleem samjhein, pakki kamai nahi. Free learning aur demo account se shuru karein, parhai ko pehle rakhein, aur fees, qarz ya zaroori kharch ka paisa risk na karein. Agar aap apne mulk ki legal trading age se chhote hain to live account na kholein.'
                 );
             }
-            if (/(course|academy|learn|training|mentor|module|enroll|seekh|sikh|course fee|fees)/.test(q)) {
+            if (/(course|academy|training|mentor|module|enroll|seekh|sikh|course fee|course fees|fees for (the )?(course|academy))/i.test(q)) {
                 return reply(
-                    'Prime Forex Academy covers beginner Forex, advanced strategy, price action, and risk management. For current course details or enrollment, contact the academy through the Enroll Now WhatsApp link.',
-                    'Prime Forex Academy mein beginner Forex, advanced strategy, price action aur risk management ki training milti hai. Course details ya admission ke liye Enroll Now WhatsApp link se academy se rabta karein.'
+                    'The website lists beginner Forex, advanced strategy, price action, risk management, live sessions, and private mentorship. Course prices and schedules are not published here; contact Arslan on WhatsApp at +92 329 3279907 for current details.',
+                    'Website par beginner Forex, advanced strategy, price action, risk management, live sessions aur private mentorship ke courses diye gaye hain. Fees aur schedule yahan mention nahi; updated details ke liye Arslan ko WhatsApp par +92 329 3279907 par message karein.'
                 );
             }
             if (/(halal|haram|islam|muslim|sood|riba|swap.free)/.test(q)) {
@@ -1606,8 +2128,56 @@
             }
             if (/(lot size|lots|position size|volume|lot calculation|lot calculate|lot kitna|lot nikal)/.test(q)) {
                 return reply(
-                    'Lot size is based on your account balance, risk percentage, stop-loss distance, and the pair’s pip value. First calculate risk amount = balance × risk %. Then use a position-size calculator with the correct pip value for your broker and currency. Share those figures if you want help with the calculation; this page’s risk calculator is also available.',
-                    'Lot size balance, risk percentage, stop-loss ke pips aur pair ki pip value par depend karta hai. Pehle risk amount nikalein: balance × risk %. Phir broker aur currency ke mutabiq sahi pip value ke saath position-size calculator use karein. Ye numbers bhejein to main hisaab samjha dunga; page par risk calculator bhi hai.'
+                    'Position size = (account balance × risk %) ÷ (stop-loss in pips × pip value per lot). Pip value varies by instrument and account currency, so use your broker’s specification. Enter those values in the Position Size Calculator on this page; share them here if you want the calculation explained.',
+                    'Position size = (account balance × risk %) ÷ (stop-loss ke pips × har lot ki pip value). Instrument aur account currency se pip value badalti hai, is liye broker ki specification check karein. Page ke Position Size Calculator mein ye values daalein; numbers bhej dein to main hisaab samjha dunga.'
+                );
+            }
+            if (/(pip value|calculate.*pip|pip.*value)/.test(q)) {
+                return reply(
+                    'For a standard FX lot, pip value in the quote currency is usually contract size × pip size (often 100,000 × 0.0001 = 10 quote-currency units for most non-JPY pairs). Convert it to your account currency using the current rate. Contract sizes and pip sizes vary by instrument and broker, so verify their specification.',
+                    'Standard FX lot mein quote currency ki pip value aam tor par contract size × pip size hoti hai (aksar non-JPY pairs mein 100,000 × 0.0001 = 10 quote-currency units). Isay current rate par apni account currency mein convert karein. Contract aur pip size instrument/broker ke mutabiq badal sakte hain, is liye broker ki specification check karein.'
+                );
+            }
+            if (/(margin call|stop out|stopout|margin level)/.test(q)) {
+                return reply(
+                    'A margin call or stop-out threshold is set by the broker when account equity is low relative to used margin. The broker may restrict or close positions under its rules. Thresholds differ, so check the account terms and monitor free margin; leverage can magnify losses quickly.',
+                    'Margin call ya stop-out broker ke muqarrar threshold par hota hai jab account equity, used margin ke muqable mein kam ho. Broker apne rules ke mutabiq positions band kar sakta hai. Thresholds broker se check karein, free margin monitor karein; leverage loss ko tez barha sakta hai.'
+                );
+            }
+            if (/(order type|market order|limit order|stop order|pending order|buy limit|sell limit|buy stop|sell stop)/.test(q)) {
+                return reply(
+                    'A market order tries to execute near the current available price. Limit orders target a specified price or better; stop orders activate after a trigger price is reached. Execution, gaps, and slippage can differ from the requested price—check your broker’s order rules.',
+                    'Market order mojooda available price ke qareeb execute hota hai. Limit order muqarrar price ya behtar price ka wait karta hai; stop order trigger price hit hone par activate hota hai. Gaps aur slippage ki wajah se execution price mukhtalif ho sakti hai—broker ke rules check karein.'
+                );
+            }
+            if (/(take profit|takeprofit|\btp\b|stop loss kya|stoploss kya|\bsl kya\b)/.test(q)) {
+                return reply(
+                    'A stop loss is a pre-set exit level intended to limit loss; a take profit is a pre-set level to close a position after a target is reached. Neither guarantees execution at that exact price during gaps or fast markets. Decide both levels and your risk before entering.',
+                    'Stop loss pehle se tay kiya gaya exit level hai jo loss limit karne ke liye hota hai; take profit target par position band karta hai. Gap ya tez market mein exact price ki guarantee nahi hoti. Trade se pehle dono levels aur apna risk tay karein.'
+                );
+            }
+            if (/(indicator|rsi|macd|moving average|ema|sma|bollinger|best indicator)/.test(q)) {
+                return reply(
+                    'Indicators summarize past price data and can lag or give false signals. There is no universally best indicator. Learn what one indicator measures, test clear rules on historical/demo data, and combine it with price context and risk limits.',
+                    'Indicators purani price ko summarize karte hain aur late ya ghalat signal de sakte hain. Har kisi ke liye ek best indicator nahi hota. Ek indicator ka kaam samjhein, clear rules ko historical/demo data par test karein aur price context ke saath risk limit bhi rakhein.'
+                );
+            }
+            if (/(economic news|news trading|news impact|nfp|cpi|interest rate|rate decision|news ka asar)/.test(q)) {
+                return reply(
+                    'Economic releases and central-bank decisions can cause sharp price moves, wider spreads, and slippage. Check a current economic calendar and your broker’s rules, and avoid entering a trade unless you understand the extra risk. I do not have live news updates.',
+                    'Economic news aur central bank ke faislon se price tez move, spread wide aur slippage ho sakti hai. Updated economic calendar aur broker ke rules check karein; extra risk samjhe baghair trade na lein. Mere paas live news updates nahi hain.'
+                );
+            }
+            if (/(slippage|gap|requote|execution price)/.test(q)) {
+                return reply(
+                    'Slippage is the difference between the requested and executed price; it can happen in fast, illiquid, or news-driven markets. Stop orders can also fill beyond their trigger after a gap. Review your broker’s execution policy and account for this risk.',
+                    'Slippage requested aur actual executed price ka farq hai; tez, kam liquidity ya news wale market mein ho sakta hai. Gap ke baad stop order trigger se bhi aage fill ho sakta hai. Broker ki execution policy parhein aur is risk ko plan mein rakhein.'
+                );
+            }
+            if (/(psychology|discipline|revenge trad|fomo|fear|greed|emotion|overtrad)/.test(q)) {
+                return reply(
+                    'A written plan can help reduce emotional decisions: define entry, stop, risk, and daily loss limits before trading. Take a break after a rule violation or loss; do not increase size to recover. A journal can help identify repeated patterns.',
+                    'Likha hua plan jazbati faislon ko kam kar sakta hai: entry, stop, risk aur daily loss limit pehle tay karein. Rule tootne ya loss ke baad break lein; loss recover karne ke liye size na barhayein. Journal se apne repeat patterns samajhne mein madad milti hai.'
                 );
             }
             if (/(risk|management|stop loss|stoploss|\bsl\b|capital protect|account bach|nuksan|loss limit)/.test(q)) {
@@ -1696,8 +2266,8 @@
             }
 
             return reply(
-                'Sorry, I can only help with Forex and trading-related questions. Please ask me about a trading topic, such as risk, lot size, or a demo account.',
-                'Maazrat, main sirf Forex aur trading se mutaliq sawalon mein madad kar sakta hoon. Bara-e-karam trading ka sawal poochhein, jaise risk, lot size ya demo account ke baare mein.'
+                'I can help with Forex basics, risk, lot sizing, charts, trading terms, and academy information. I do not have live prices and cannot give buy/sell signals. Could you share the specific trading concept or instrument you mean?',
+                'Main Forex basics, risk, lot size, charts, trading terms aur academy ki maloomat mein madad kar sakta hoon. Mere paas live prices nahi aur main buy/sell signal nahi deta. Aap kis specific trading concept ya instrument ke baare mein pooch rahe hain?'
             );
         }
 
@@ -1710,7 +2280,7 @@
             chatInput.value = '';
             const typingIndicator = addTypingIndicator();
             const reply = getTradingReply(value);
-            setTimeout(() => {
+            window.setTimeout(() => {
                 if (typingIndicator) typingIndicator.remove();
                 addChatMessage('bot', reply);
             }, 3000);
@@ -1733,7 +2303,8 @@
 
         if (chatInput) {
             chatInput.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
                     submitChat();
                 }
             });
@@ -1755,90 +2326,67 @@
             if (icon) {
                 icon.className = isCollapsed ? 'fa-solid fa-plus' : 'fa-solid fa-minus';
             }
+            if (chatToggleBtn) {
+                chatToggleBtn.setAttribute('aria-expanded', String(!isCollapsed));
+                chatToggleBtn.setAttribute('aria-label', isCollapsed ? 'Open Prime Ai chat' : 'Close Prime Ai chat');
+            }
         }
 
-        if (chatToggleBtn) {
-            chatToggleBtn.addEventListener('click', (event) => {
-                event.stopPropagation();
-                toggleChatWidget();
-            });
+        if (chatToggleBtn) chatToggleBtn.addEventListener('click', toggleChatWidget);
+
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuButton = document.getElementById('mobile-menu-btn');
+        function setMobileMenuOpen(isOpen) {
+            if (!mobileMenu || !mobileMenuButton) return;
+            mobileMenu.classList.toggle('hidden', !isOpen);
+            mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
+            mobileMenuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+            mobileMenuButton.querySelector('i').className = isOpen
+                ? 'fa-solid fa-xmark text-2xl'
+                : 'fa-solid fa-bars text-2xl';
         }
-
-        if (aiChatbot) {
-            aiChatbot.addEventListener('click', () => {
-                if (aiChatbot.classList.contains('collapsed')) {
-                    toggleChatWidget();
-                }
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                setMobileMenuOpen(mobileMenu.classList.contains('hidden'));
             });
-
-            aiChatbot.addEventListener('keydown', (event) => {
-                if (event.target !== aiChatbot) return;
-
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    if (aiChatbot.classList.contains('collapsed')) {
-                        toggleChatWidget();
-                    }
+            mobileMenu.querySelectorAll('[data-mobile-nav-link]').forEach(link => {
+                link.addEventListener('click', () => setMobileMenuOpen(false));
+            });
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                    setMobileMenuOpen(false);
+                    mobileMenuButton.focus();
                 }
             });
         }
     </script>
     
-   <script>
-  const scrollBtn = document.getElementById("scrollTopBtn");
+    <script>
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        const readingProgress = document.getElementById('reading-progress');
+        document.getElementById('current-year').textContent = new Date().getFullYear();
 
-  // Jab user thoda niche scroll karega toh button smooth animation ke sath upar aayega
-  window.addEventListener("scroll", () => {
-    if (window.pageYOffset > 300) {
-      scrollBtn.classList.remove("opacity-0", "translate-y-5", "pointer-events-none");
-      scrollBtn.classList.add("opacity-100", "translate-y-0");
-    } else {
-      scrollBtn.classList.add("opacity-0", "translate-y-5", "pointer-events-none");
-      scrollBtn.classList.remove("opacity-100", "translate-y-0");
-    }
-  });
+        function updatePageProgress() {
+            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+            readingProgress.style.width = `${Math.min(100, Math.max(0, progress))}%`;
 
-  // Jab button par click hoga toh page smooth tarike se top par chala jayega
-  scrollBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
-</script>
-<script>
-    // 1. Right-Click Disable karne ke liye
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        // Optional: Aap yahan koi alert ya message bhi show kar sakte hain
-    });
+            if (window.scrollY > 300) {
+                scrollBtn.classList.remove('opacity-0', 'translate-y-5', 'pointer-events-none');
+                scrollBtn.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                scrollBtn.classList.add('opacity-0', 'translate-y-5', 'pointer-events-none');
+                scrollBtn.classList.remove('opacity-100', 'translate-y-0');
+            }
+        }
+        window.addEventListener('scroll', updatePageProgress, { passive: true });
+        window.addEventListener('resize', updatePageProgress);
+        updatePageProgress();
 
-    // 2. Keyboard Shortcuts (F12, Inspect, View Source) disable karne ke liye
-    document.addEventListener('keydown', function(e) {
-        // F12 key
-        if (e.key === 'F12') {
-            e.preventDefault();
-            return false;
-        }
-        
-        // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C (DevTools)
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) {
-            e.preventDefault();
-            return false;
-        }
-        
-        // Ctrl+U (View Source)
-        if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
-            e.preventDefault();
-            return false;
-        }
-
-        // Ctrl+S (Save Page)
-        if (e.ctrlKey && (e.key === 'S' || e.key === 's')) {
-            e.preventDefault();
-            return false;
-        }
-    });
-</script>
+        scrollBtn.addEventListener('click', () => {
+            const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+            window.scrollTo({ top: 0, behavior });
+        });
+    </script>
 </body>
 </html>
